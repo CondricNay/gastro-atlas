@@ -1,0 +1,19 @@
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Go
+backend/bin/
+backend/coverage.out
+
+# Environment variables
+.env
+*.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
