@@ -1,30 +1,15 @@
-// import "github.com/gin-gonic/gin"
-
-// func main() {
-//   gin.SetMode(gin.ReleaseMode) //optional to not get warning
-//   router := gin.Default()
-//   router.GET("/ping", func(c *gin.Context) {
-//     c.JSON(200, gin.H{
-//       "message": "pong",
-//     })
-//   })
-//   router.Run() // listens on 0.0.0.0:8080 by default
-// }
-
 package main
 
 import (
 	"log"
-	"net/http"
 
-	"github.com/go-chi/chi/v5"
+	// "github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+
 	"github.com/CondricNay/gastro-atlas/internal/database"
 	"github.com/CondricNay/gastro-atlas/internal/handlers"
+	"github.com/CondricNay/gastro-atlas/internal/router"
 	"github.com/CondricNay/gastro-atlas/internal/sqlc"
-
-// 	"github.com/CondricNay/gastro-atlas/internal/models"
-
-	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -40,18 +25,12 @@ func main() {
 
 	defer pool.Close()
 
-
 	queries := sqlc.New(pool)
 
-
-	ingredientHandler :=
-		handlers.NewIngredientHandler(queries)
-
-	r := chi.NewRouter()
-
-	r.Get("/ingredients", ingredientHandler.GetIngredients)
+	ingredientHandler := handlers.NewIngredientHandler(queries)
+    r := router.SetupRouter(ingredientHandler)
 
 	log.Println("Server running on :8080")
 
-	http.ListenAndServe(":8080", r)
+	r.Run(":8080")
 }

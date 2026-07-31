@@ -9,8 +9,23 @@ import (
 )
 
 type Ingredient struct {
-	ID          int32
-	Name        string
-	Slug        string
-	Description pgtype.Text
+	ID          int32       `json:"id"`
+	Name        string      `json:"name"`
+	Slug        string      `json:"slug"`
+	Description pgtype.Text `json:"description"`
+}
+
+type IngredientPlace struct {
+	IngredientID int32       `json:"ingredientId"`
+	PlaceID      int32       `json:"placeId"`
+	Relationship string      `json:"relationship"`
+	StartYear    pgtype.Int4 `json:"startYear"`
+	EndYear      pgtype.Int4 `json:"endYear"`
+	Notes        pgtype.Text `json:"notes"`
+}
+
+type Place struct {
+	ID   int32  `json:"id"`
+	Name string `json:"name"`
+	Type string `json:"type"`
 }

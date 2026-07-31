@@ -1,10 +1,8 @@
 package handlers
 
 import (
-	"encoding/json"
-	"net/http"
-
 	"github.com/CondricNay/gastro-atlas/internal/sqlc"
+	"github.com/gin-gonic/gin"
 )
 
 type IngredientHandler struct {
@@ -12,42 +10,53 @@ type IngredientHandler struct {
 }
 
 
-func NewIngredientHandler(
-	queries *sqlc.Queries,
-) *IngredientHandler {
-
-	return &IngredientHandler{
-		queries: queries,
-	}
+func NewIngredientHandler(queries *sqlc.Queries) *IngredientHandler {
+	return &IngredientHandler{queries: queries}
 }
 
 
-func (h *IngredientHandler) GetIngredients(
-	w http.ResponseWriter,
-	r *http.Request,
-) {
-
+func (h *IngredientHandler) GetIngredients(c *gin.Context) {
 	ingredients, err :=
 		h.queries.GetIngredients(
-			r.Context(),
+			c.Request.Context(),
 		)
 
 	if err != nil {
-		http.Error(
-			w,
-			err.Error(),
-			500,
-		)
-		return
+		c.JSON(500, gin.H{"error": err.Error()})
 	}
 
+	c.JSON(200, ingredients)
+}
 
-	w.Header().Set(
-		"Content-Type",
-		"application/json",
-	)
+func (h *IngredientHandler) GetIngredientBySlug(c *gin.Context) {
+    slug := c.Param("slug")
 
-	json.NewEncoder(w).Encode(
-		ingredients,
-	)
+    ingredient, err := h.queries.GetIngredientBySlug(
+        c.Request.Context(), slug,
+    )
+
+    if err != nil {
+        c.JSON(404, gin.H{"error": "ingredient not found"})
+        return
+    }
+
+	places, err := h.queries.GetIngredientPlaces(
+        c.Request.Context(),
+        ingredient.ID,
+    )
+
+    if err != nil {
+        c.JSON(500, gin.H{
+            "error": err.Error(),
+        })
+        return
+    }
+
+    c.JSON(200, gin.H{
+        "id": ingredient.ID,
+        "slug": ingredient.Slug,
+        "name": ingredient.Name,
+        "description": ingredient.Description,
+        "places": places,
+    })
 }

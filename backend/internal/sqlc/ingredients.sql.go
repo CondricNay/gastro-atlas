@@ -31,9 +31,9 @@ RETURNING
 `
 
 type CreateIngredientParams struct {
-	Name        string
-	Slug        string
-	Description pgtype.Text
+	Name        string      `json:"name"`
+	Slug        string      `json:"slug"`
+	Description pgtype.Text `json:"description"`
 }
 
 func (q *Queries) CreateIngredient(ctx context.Context, arg CreateIngredientParams) (Ingredient, error) {
@@ -68,6 +68,57 @@ func (q *Queries) GetIngredientBySlug(ctx context.Context, slug string) (Ingredi
 		&i.Description,
 	)
 	return i, err
+}
+
+const getIngredientPlaces = `-- name: GetIngredientPlaces :many
+SELECT
+    p.name,
+    p.type,
+    ip.relationship,
+    ip.start_year,
+    ip.end_year,
+    ip.notes
+FROM ingredient_places ip
+JOIN places p
+ON p.id = ip.place_id
+WHERE ip.ingredient_id = $1
+ORDER BY ip.start_year
+`
+
+type GetIngredientPlacesRow struct {
+	Name         string      `json:"name"`
+	Type         string      `json:"type"`
+	Relationship string      `json:"relationship"`
+	StartYear    pgtype.Int4 `json:"startYear"`
+	EndYear      pgtype.Int4 `json:"endYear"`
+	Notes        pgtype.Text `json:"notes"`
+}
+
+func (q *Queries) GetIngredientPlaces(ctx context.Context, ingredientID int32) ([]GetIngredientPlacesRow, error) {
+	rows, err := q.db.Query(ctx, getIngredientPlaces, ingredientID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []GetIngredientPlacesRow
+	for rows.Next() {
+		var i GetIngredientPlacesRow
+		if err := rows.Scan(
+			&i.Name,
+			&i.Type,
+			&i.Relationship,
+			&i.StartYear,
+			&i.EndYear,
+			&i.Notes,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const getIngredients = `-- name: GetIngredients :many
