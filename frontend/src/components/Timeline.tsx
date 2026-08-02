@@ -8,29 +8,24 @@ interface Place {
   endYear: number | null;
 }
 
-interface Props {
+interface TimelineProps {
   places: Place[];
 }
 
 
-export default function Timeline({ places }: Props) {
-
+export default function Timeline({ places }: TimelineProps) {
   const svgRef = useRef<SVGSVGElement | null>(null);
-
+  const CURRENT_YEAR = new Date().getFullYear();
 
   useEffect(() => {
-
     if (!svgRef.current) return;
-
 
     const width = 800;
     const height = places.length * 60 + 80;
 
-
     const svg = d3.select(svgRef.current);
 
     svg.selectAll("*").remove();
-
 
     const margin = {
       top: 30,
@@ -39,11 +34,9 @@ export default function Timeline({ places }: Props) {
       left: 150
     };
 
-
     const years = places.flatMap(p => [
       p.startYear, p.endYear ?? new Date().getFullYear()
     ]);
-
 
     const x = d3.scaleLinear()
       .domain([d3.min(years)!, d3.max(years)!])
@@ -63,7 +56,6 @@ export default function Timeline({ places }: Props) {
 
 
     // Axis
-
     svg.append("g")
       .attr(
         "transform",
@@ -75,7 +67,6 @@ export default function Timeline({ places }: Props) {
 
 
     // Labels
-
     svg.append("g")
       .selectAll("text")
       .data(places)
@@ -90,7 +81,6 @@ export default function Timeline({ places }: Props) {
 
 
     // Timeline bars
-
     svg.append("g")
       .selectAll("rect")
       .data(places)
@@ -98,13 +88,9 @@ export default function Timeline({ places }: Props) {
       .attr("x", p => x(p.startYear))
       .attr("y", p => y(p.name)!)
       .attr("width", p =>
-        x(p.endYear ?? 2026) -
-        x(p.startYear)
+        x(p.endYear ?? CURRENT_YEAR) - x(p.startYear)
       )
-      .attr(
-        "height",
-        y.bandwidth()
-      );
+      .attr("height", y.bandwidth());
 
 
   }, [places]);
