@@ -1,106 +1,112 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-interface Place {
-  name: string;
-  relationship: string;
-  startYear: number;
-  endYear: number | null;
+interface TimelineMarker {
+  year: number;
+  label: string;
 }
 
 interface TimelineProps {
-  places: Place[];
+  minYear: number;
+  maxYear: number;
+  currentYear: number;
+  onYearChange: (year: number) => void;
+  markers: TimelineMarker[];
 }
 
+export default function Timeline2({
+  minYear,
+  maxYear,
+  currentYear,
+  onYearChange,
+  markers,
+}: TimelineProps) {
+    const svgRef = useRef<SVGSVGElement | null>(null);
 
-export default function Timeline({ places }: TimelineProps) {
-  const svgRef = useRef<SVGSVGElement | null>(null);
-  const CURRENT_YEAR = new Date().getFullYear();
-
-  useEffect(() => {
-    if (!svgRef.current) return;
-
-    const width = 800;
-    const height = places.length * 60 + 80;
-
-    const svg = d3.select(svgRef.current);
-
-    svg.selectAll("*").remove();
+    const WIDTH = 800;
+    const HEIGHT = 120;
 
     const margin = {
-      top: 30,
-      right: 30,
-      bottom: 40,
-      left: 150
+        left: 40,
+        right: 40,
     };
 
-    const years = places.flatMap(p => [
-      p.startYear, p.endYear ?? new Date().getFullYear()
-    ]);
+    const xScale = d3
+        .scaleLinear()
+        .domain([minYear, maxYear])
+        .range([margin.left, WIDTH - margin.right])
+        .clamp(true);
 
-    const x = d3.scaleLinear()
-      .domain([d3.min(years)!, d3.max(years)!])
-      .range([
-        margin.left,
-        width - margin.right
-      ]);
+    useEffect(() => {
+        if (!svgRef.current) return;
 
+        const svg = d3.select(svgRef.current);
+        svg.selectAll("*").remove();
+        
+        const track = svg.append("rect")
+            .attr("x", margin.left)
+            .attr("y", HEIGHT / 2 - 4)
+            .attr("width", WIDTH - margin.left - margin.right)
+            .attr("height", 8)
+            .attr("rx", 4);
 
-    const y = d3.scaleBand()
-      .domain(places.map(p => p.name))
-      .range([
-        margin.top,
-        height - margin.bottom
-      ])
-      .padding(0.3);
+        track.on("click", (event) => {
+            const [mouseX] = d3.pointer(event);
 
+            const year = Math.round(
+                xScale.invert(mouseX)
+            );
 
-    // Axis
-    svg.append("g")
-      .attr(
-        "transform",
-        `translate(0,${height - margin.bottom})`
-      )
-      .call(
-        d3.axisBottom(x)
-      );
+            onYearChange(year);
+        });
 
+        const handle = svg.append("circle")
+            .attr("cx", xScale(currentYear))
+            .attr("cy", HEIGHT / 2)
+            .attr("r", 10)
+            .attr("fill", "#2563eb");
 
-    // Labels
-    svg.append("g")
-      .selectAll("text")
-      .data(places)
-      .join("text")
-      .attr("x", margin.left - 10)
-      .attr("y", p =>
-        y(p.name)! + y.bandwidth()/2
-      )
-      .attr("text-anchor", "end")
-      .attr("alignment-baseline", "middle")
-      .text(p => p.name);
+        const drag = d3.drag<SVGCircleElement, unknown>()
+            .on("drag", (event) => {
+                const year = Math.round(
+                    xScale.invert(event.x)
+                );
 
+                onYearChange(year);
+            });
 
-    // Timeline bars
-    svg.append("g")
-      .selectAll("rect")
-      .data(places)
-      .join("rect")
-      .attr("x", p => x(p.startYear))
-      .attr("y", p => y(p.name)!)
-      .attr("width", p =>
-        x(p.endYear ?? CURRENT_YEAR) - x(p.startYear)
-      )
-      .attr("height", y.bandwidth());
+        handle.call(drag);
 
+        svg.append("g")
+            .selectAll("circle")
+            .data(markers)
+            .join("circle")
+            .attr("cx", d => xScale(d.year))
+            .attr("cy", HEIGHT / 2)
+            .attr("r", 4)
+            .attr("fill", "#6b7280");
 
-  }, [places]);
+        svg.append("g")
+            .selectAll("text")
+            .data(markers)
+            .join("text")
+            .attr("x", d => xScale(d.year))
+            .attr("y", HEIGHT / 2 + 25)
+            .attr("text-anchor", "middle")
+            .text(d => d.year);
+            
 
+        svg.append("text")
+            .attr("x", xScale(currentYear))
+            .attr("y", 20)
+            .attr("text-anchor", "middle")
+            .text(currentYear);
 
-  return (
-    <svg
-      ref={svgRef}
-      width="800"
-      height={places.length * 60 + 80}
+    }, [currentYear, markers, minYear, maxYear, onYearChange]);
+
+    return <svg
+        ref={svgRef}
+        width={WIDTH}
+        height={HEIGHT}
     />
-  );
 }

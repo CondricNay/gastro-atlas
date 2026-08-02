@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { getIngredient } from "../api/ingredients";
 import type { Ingredient } from "../types/ingredients";
 
-// import Timeline from "../components/Timeline";
-import Timeline2 from "../components/Timeline2";
+import Timeline2 from "../components/Timeline";
 
 export default function IngredientPage() {
   const { slug } = useParams();
@@ -29,9 +28,16 @@ export default function IngredientPage() {
     label: `${place.relationship}: ${place.name}`,
   }));
 
+  // const visiblePlaces = ingredient.places.filter(place =>
+  //   place.startYear <= currentYear &&
+  //   (place.endYear === null || currentYear <= place.endYear)
+  // );
+  const visiblePlaces = ingredient.places.filter(
+    place => place.startYear <= currentYear
+  );
+
   return (
     <main>
-      {/* <Timeline places={ingredient.places} /> */}
       <Timeline2
         minYear={minYear}
         maxYear={maxYear}
@@ -39,14 +45,14 @@ export default function IngredientPage() {
         onYearChange={setCurrentYear}
         markers={markers}
       />
-      <h1>
-        {ingredient.name}
-      </h1>
+      <h2>
+        {currentYear < 0
+          ? `${Math.abs(currentYear)} BCE`
+          : `${currentYear} CE`}
+      </h2>
 
-      <p>
-        {ingredient.description}
-      </p>
-
+      <h1>{ingredient.name}</h1>
+      <p>{ingredient.description}</p>
 
       <h2>
         Historical Journey
@@ -54,7 +60,7 @@ export default function IngredientPage() {
 
       <ul>
         {
-          ingredient.places.map(place => (
+          visiblePlaces.map(place => (
             <li key={place.name}>
               {place.name}
               {" - "}
@@ -64,7 +70,6 @@ export default function IngredientPage() {
           ))
         }
       </ul>
-
     </main>
   );
 }
