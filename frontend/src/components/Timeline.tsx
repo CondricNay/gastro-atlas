@@ -14,7 +14,7 @@ interface TimelineProps {
   markers: TimelineMarker[];
 }
 
-export default function Timeline2({
+export default function Timeline({
   minYear,
   maxYear,
   currentYear,

@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { getIngredient } from "../api/ingredients";
 import type { Ingredient } from "../types/ingredients";
 
-import Timeline2 from "../components/Timeline";
+import Timeline from "../components/Timeline";
+import WorldMap from "../components/WorldMap";
 
 export default function IngredientPage() {
   const { slug } = useParams();
@@ -38,7 +39,8 @@ export default function IngredientPage() {
 
   return (
     <main>
-      <Timeline2
+      <WorldMap places={visiblePlaces} />
+      <Timeline
         minYear={minYear}
         maxYear={maxYear}
         currentYear={currentYear}
