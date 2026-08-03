@@ -25,7 +25,9 @@ type IngredientPlace struct {
 }
 
 type Place struct {
-	ID   int32  `json:"id"`
-	Name string `json:"name"`
-	Type string `json:"type"`
+	ID        int32   `json:"id"`
+	Name      string  `json:"name"`
+	Type      string  `json:"type"`
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
 }

@@ -38,14 +38,16 @@ RETURNING
 
 -- name: GetIngredientPlaces :many
 SELECT
+    p.id,
     p.name,
     p.type,
+    p.latitude,
+    p.longitude,
     ip.relationship,
     ip.start_year,
     ip.end_year,
     ip.notes
 FROM ingredient_places ip
-JOIN places p
-ON p.id = ip.place_id
+JOIN places p ON p.id = ip.place_id
 WHERE ip.ingredient_id = $1
 ORDER BY ip.start_year;

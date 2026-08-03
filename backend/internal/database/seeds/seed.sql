@@ -14,27 +14,13 @@ ON CONFLICT (slug) DO NOTHING;
 
 -- Places
 
-INSERT INTO places (
-    name,
-    type
-)
+INSERT INTO places (name, type, latitude, longitude)
 VALUES
-(
-    'Andes Region',
-    'region'
-),
-(
-    'Mesoamerica',
-    'region'
-),
-(
-    'Spanish Empire',
-    'empire'
-),
-(
-    'Italy',
-    'country'
-)
+('Andes Region', 'region', -13.5, -72.0),
+('Mesoamerica', 'region', 17.0, -92.0),
+('Spanish Empire', 'empire', 40.4168, -3.7038),
+('Italy', 'country', 41.9028, 12.4964)
+
 ON CONFLICT DO NOTHING;
 
 
