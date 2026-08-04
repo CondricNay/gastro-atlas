@@ -56,6 +56,23 @@ export default function WorldMap({ places }: WorldMapProps) {
       .attr("cy", d =>
         projection([d.longitude, d.latitude])![1]
       );
+
+      const routePoints = places
+        .map(place =>
+          projection([
+            place.longitude,
+            place.latitude
+          ])
+        );
+
+      svg.selectAll("path.route")
+        .data([routePoints])
+        .join("path")
+        .attr("class", "route")
+        .attr("d", d3.line())
+        .attr("fill", "none")
+        .attr("stroke", "blue")
+        .attr("stroke-width", 2);
     }
 
     drawMap();

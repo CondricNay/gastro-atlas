@@ -84,7 +84,7 @@ export default function Timeline({
             .attr("cx", d => xScale(d.year))
             .attr("cy", HEIGHT / 2)
             .attr("r", 4)
-            .attr("fill", "#6b7280");
+            .attr("fill", "gray");
 
         svg.append("g")
             .selectAll("text")
