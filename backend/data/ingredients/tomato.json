@@ -1,0 +1,47 @@
+{
+  "slug": "tomato",
+  "name": "Tomato",
+  "description": "A fruit native to the Americas that became a major ingredient in cuisines worldwide.",
+  "places": [
+    {
+      "name": "Andes Region",
+      "type": "region",
+      "latitude": -13.5,
+      "longitude": -72.0,
+      "relationship": "origin",
+      "startYear": -500,
+      "endYear": 1500,
+      "notes": "Wild tomato relatives and early cultivation are associated with the Andes region."
+    },
+    {
+      "name": "Mesoamerica",
+      "type": "region",
+      "latitude": 17.0,
+      "longitude": -92.0,
+      "relationship": "cultivation",
+      "startYear": -500,
+      "endYear": 1500,
+      "notes": "Tomatoes were cultivated and incorporated into local cuisines."
+    },
+    {
+      "name": "Spanish Empire",
+      "type": "empire",
+      "latitude": 40.4168,
+      "longitude": -3.7038,
+      "relationship": "introduced",
+      "startYear": 1500,
+      "endYear": null,
+      "notes": "Tomatoes were brought to Europe after Spanish contact with the Americas."
+    },
+    {
+      "name": "Italy",
+      "type": "country",
+      "latitude": 41.9028,
+      "longitude": 12.4964,
+      "relationship": "popularized",
+      "startYear": 1700,
+      "endYear": null,
+      "notes": "Tomatoes became central to Italian cuisine, especially sauces."
+    }
+  ]
+}

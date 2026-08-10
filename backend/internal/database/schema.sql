@@ -1,13 +1,13 @@
 CREATE TABLE ingredients (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    name TEXT NOT NULL UNIQUE,
     slug TEXT UNIQUE NOT NULL,
     description TEXT
 );
 
 CREATE TABLE places (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    name TEXT NOT NULL UNIQUE,
     type TEXT NOT NULL,
     latitude  DOUBLE PRECISION NOT NULL,
     longitude DOUBLE PRECISION NOT NULL
