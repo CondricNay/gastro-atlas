@@ -6,9 +6,10 @@ import type { Place } from "../types/ingredients";
 
 interface WorldMapProps {
   places: Place[];
+  onPlaceClick?: (place: Place) => void;
 }
 
-export default function WorldMap({ places }: WorldMapProps) {
+export default function WorldMap({ places, onPlaceClick }: WorldMapProps) {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   const width = 800;
@@ -20,7 +21,6 @@ export default function WorldMap({ places }: WorldMapProps) {
 
   const path = d3.geoPath()
     .projection(projection);
-
 
   useEffect(() => {
     async function drawMap() {
@@ -46,7 +46,8 @@ export default function WorldMap({ places }: WorldMapProps) {
         enter => enter
             .append("circle")
             .attr("fill", "red")
-            .attr("r", 5),
+            .attr("r", 5)
+            .style("cursor", "pointer"),
         update => update,
         exit => exit.remove()
       )
@@ -55,7 +56,10 @@ export default function WorldMap({ places }: WorldMapProps) {
       )
       .attr("cy", d =>
         projection([d.longitude, d.latitude])![1]
-      );
+      )
+      .on("click", (event, place) => {
+        onPlaceClick?.(place);
+      });
 
       const routePoints = places
         .map(place =>

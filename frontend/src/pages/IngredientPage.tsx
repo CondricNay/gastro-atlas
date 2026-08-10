@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { getIngredient } from "../api/ingredients";
-import type { Ingredient } from "../types/ingredients";
+import type { Ingredient, Place } from "../types/ingredients";
 
 import Timeline from "../components/Timeline";
 import WorldMap from "../components/WorldMap";
@@ -13,6 +13,7 @@ export default function IngredientPage() {
   const minYear = -500;
   const maxYear = new Date().getFullYear();
   const [currentYear, setCurrentYear] = useState(-500);
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
 
   useEffect(() => {
     if (!slug) return;
@@ -39,7 +40,10 @@ export default function IngredientPage() {
 
   return (
     <main>
-      <WorldMap places={visiblePlaces} />
+      <WorldMap
+        places={visiblePlaces}
+        onPlaceClick={setSelectedPlace}
+      />
       <Timeline
         minYear={minYear}
         maxYear={maxYear}
@@ -60,7 +64,20 @@ export default function IngredientPage() {
         Historical Journey
       </h2>
 
-      <ul>
+      {selectedPlace && (
+        <div>
+          <h2>{selectedPlace.name}</h2>
+          <p>{selectedPlace.relationship}</p>
+          <p>
+            {selectedPlace.startYear < 0
+              ? `${Math.abs(selectedPlace.startYear)} BCE`
+              : `${selectedPlace.startYear} CE`}
+          </p>
+          <p>{selectedPlace.notes}</p>
+        </div>
+      )}
+
+      {/* <ul>
         {
           visiblePlaces.map(place => (
             <li key={place.name}>
@@ -71,7 +88,7 @@ export default function IngredientPage() {
             </li>
           ))
         }
-      </ul>
+      </ul> */}
     </main>
   );
 }
