@@ -1,0 +1,57 @@
+{
+  "slug": "chili-pepper",
+  "name": "Chili Pepper",
+  "description": "Chili peppers are fruits of plants in the genus Capsicum, native to the Americas and later spread around the world through the Columbian Exchange.",
+  "places": [
+    {
+      "name": "Mesoamerica",
+      "type": "region",
+      "latitude": 17.0,
+      "longitude": -92.0,
+      "relationship": "origin",
+      "startYear": -6000,
+      "endYear": null,
+      "notes": "Capsicum peppers were domesticated in the Americas thousands of years ago. Mesoamerica became an important center for the cultivation and use of chili peppers."
+    },
+    {
+      "name": "Mexico",
+      "type": "country",
+      "latitude": 23.6345,
+      "longitude": -102.5528,
+      "relationship": "cultivation",
+      "startYear": -2000,
+      "endYear": null,
+      "notes": "Chili peppers were widely cultivated and incorporated into food traditions in pre-Columbian Mexico."
+    },
+    {
+      "name": "Spain",
+      "type": "country",
+      "latitude": 40.4637,
+      "longitude": -3.7492,
+      "relationship": "introduction",
+      "startYear": 1493,
+      "endYear": null,
+      "notes": "Chili peppers reached Spain soon after the Columbian Exchange and were subsequently cultivated in Europe."
+    },
+    {
+      "name": "India",
+      "type": "country",
+      "latitude": 20.5937,
+      "longitude": 78.9629,
+      "relationship": "introduction",
+      "startYear": 1500,
+      "endYear": null,
+      "notes": "Chili peppers were introduced to South Asia during the early period of Portuguese maritime trade and became deeply integrated into regional cuisines."
+    },
+    {
+      "name": "Southeast Asia",
+      "type": "region",
+      "latitude": 5.0,
+      "longitude": 110.0,
+      "relationship": "introduction",
+      "startYear": 1500,
+      "endYear": null,
+      "notes": "Chili peppers spread through Southeast Asia during the early modern period and became important ingredients in many regional cuisines."
+    }
+  ]
+}

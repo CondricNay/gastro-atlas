@@ -3,6 +3,7 @@ import * as d3 from "d3";
 
 import { feature } from "topojson-client";
 import type { Place } from "../types/ingredients";
+import { generateRouteSegments } from "../utils/route";
 
 interface WorldMapProps {
   places: Place[];
@@ -61,16 +62,17 @@ export default function WorldMap({ places, onPlaceClick }: WorldMapProps) {
         onPlaceClick?.(place);
       });
 
-      const routePoints = places
-        .map(place =>
-          projection([
-            place.longitude,
-            place.latitude
-          ])
-        );
+      const routeSegments = generateRouteSegments(places);
+
+      const routeLines = routeSegments.map(segment => [
+        projection([segment.from.longitude, segment.from.latitude]),
+        projection([segment.to.longitude, segment.to.latitude]),
+      ]);
+
+      console.log("Route Lines:", routeLines);
 
       svg.selectAll("path.route")
-        .data([routePoints])
+        .data(routeLines)
         .join("path")
         .attr("class", "route")
         .attr("d", d3.line())

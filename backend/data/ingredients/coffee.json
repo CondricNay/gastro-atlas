@@ -1,0 +1,57 @@
+{
+  "slug": "coffee",
+  "name": "Coffee",
+  "description": "Coffee originated in Africa and was later cultivated and traded across the Arabian Peninsula before spreading to Europe and eventually becoming a global crop.",
+  "places": [
+    {
+      "name": "Ethiopia",
+      "type": "country",
+      "latitude": 9.145,
+      "longitude": 40.4897,
+      "relationship": "origin",
+      "startYear": null,
+      "endYear": null,
+      "notes": "Coffee plants of the genus Coffea are native to the highlands of Ethiopia, which are widely regarded as the botanical origin of Arabica coffee."
+    },
+    {
+      "name": "Yemen",
+      "type": "country",
+      "latitude": 15.5527,
+      "longitude": 48.5164,
+      "relationship": "cultivation",
+      "startYear": 1400,
+      "endYear": null,
+      "notes": "Coffee was cultivated in Yemen and became associated with the development of coffee-drinking culture and early commercial coffee trade."
+    },
+    {
+      "name": "Arabian Peninsula",
+      "type": "region",
+      "latitude": 23.8859,
+      "longitude": 45.0792,
+      "relationship": "trade",
+      "startYear": 1500,
+      "endYear": null,
+      "notes": "Coffee was traded through the Arabian Peninsula and Red Sea commercial networks."
+    },
+    {
+      "name": "Ottoman Empire",
+      "type": "historical_region",
+      "latitude": 39.0,
+      "longitude": 35.0,
+      "relationship": "introduction",
+      "startYear": 1500,
+      "endYear": null,
+      "notes": "Coffee spread through Ottoman territories during the sixteenth century, and coffeehouses became important social institutions."
+    },
+    {
+      "name": "Europe",
+      "type": "region",
+      "latitude": 50.0,
+      "longitude": 10.0,
+      "relationship": "introduction",
+      "startYear": 1600,
+      "endYear": null,
+      "notes": "Coffee reached European markets during the seventeenth century and gradually developed into a major commercial beverage."
+    }
+  ]
+}
