@@ -44,6 +44,10 @@ func importIngredient(
 		return fmt.Errorf("parse JSON: %w", err)
 	}
 
+	if err := ValidateIngredient(ingredient); err != nil {
+		return fmt.Errorf("validate data: %w", err)
+	}
+
 	fmt.Printf("Importing %s...\n", ingredient.Name)
 
 	tx, err := db.BeginTx(ctx, pgx.TxOptions{})
