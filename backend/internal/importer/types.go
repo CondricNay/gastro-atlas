@@ -8,12 +8,12 @@ type IngredientData struct {
 }
 
 type PlaceData struct {
-	Name         string `json:"name"`
-	Type         string `json:"type"`
+	Name         string  `json:"name"`
+	Type         string  `json:"type"`
 	Latitude     float64 `json:"latitude"`
 	Longitude    float64 `json:"longitude"`
-	Relationship string `json:"relationship"`
-	StartYear    *int        `json:"startYear"`
-	EndYear      *int        `json:"endYear"`
-	Notes        string      `json:"notes"`
+	Relationship string  `json:"relationship"`
+	StartYear    *int    `json:"startYear"`
+	EndYear      *int    `json:"endYear"`
+	Notes        string  `json:"notes"`
 }

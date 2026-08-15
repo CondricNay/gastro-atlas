@@ -11,43 +11,6 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-const createIngredient = `-- name: CreateIngredient :one
-INSERT INTO ingredients (
-    name,
-    slug,
-    description
-)
-VALUES (
-    $1,
-    $2,
-    $3
-)
-
-RETURNING
-    id,
-    name,
-    slug,
-    description
-`
-
-type CreateIngredientParams struct {
-	Name        string      `json:"name"`
-	Slug        string      `json:"slug"`
-	Description pgtype.Text `json:"description"`
-}
-
-func (q *Queries) CreateIngredient(ctx context.Context, arg CreateIngredientParams) (Ingredient, error) {
-	row := q.db.QueryRow(ctx, createIngredient, arg.Name, arg.Slug, arg.Description)
-	var i Ingredient
-	err := row.Scan(
-		&i.ID,
-		&i.Name,
-		&i.Slug,
-		&i.Description,
-	)
-	return i, err
-}
-
 const getIngredientBySlug = `-- name: GetIngredientBySlug :one
 SELECT
     id,
@@ -68,65 +31,6 @@ func (q *Queries) GetIngredientBySlug(ctx context.Context, slug string) (Ingredi
 		&i.Description,
 	)
 	return i, err
-}
-
-const getIngredientPlaces = `-- name: GetIngredientPlaces :many
-SELECT
-    p.id,
-    p.name,
-    p.type,
-    p.latitude,
-    p.longitude,
-    ip.relationship,
-    ip.start_year,
-    ip.end_year,
-    ip.notes
-FROM ingredient_places ip
-JOIN places p ON p.id = ip.place_id
-WHERE ip.ingredient_id = $1
-ORDER BY ip.start_year
-`
-
-type GetIngredientPlacesRow struct {
-	ID           int32       `json:"id"`
-	Name         string      `json:"name"`
-	Type         string      `json:"type"`
-	Latitude     float64     `json:"latitude"`
-	Longitude    float64     `json:"longitude"`
-	Relationship string      `json:"relationship"`
-	StartYear    pgtype.Int4 `json:"startYear"`
-	EndYear      pgtype.Int4 `json:"endYear"`
-	Notes        pgtype.Text `json:"notes"`
-}
-
-func (q *Queries) GetIngredientPlaces(ctx context.Context, ingredientID int32) ([]GetIngredientPlacesRow, error) {
-	rows, err := q.db.Query(ctx, getIngredientPlaces, ingredientID)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []GetIngredientPlacesRow
-	for rows.Next() {
-		var i GetIngredientPlacesRow
-		if err := rows.Scan(
-			&i.ID,
-			&i.Name,
-			&i.Type,
-			&i.Latitude,
-			&i.Longitude,
-			&i.Relationship,
-			&i.StartYear,
-			&i.EndYear,
-			&i.Notes,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
 }
 
 const getIngredients = `-- name: GetIngredients :many
@@ -162,4 +66,35 @@ func (q *Queries) GetIngredients(ctx context.Context) ([]Ingredient, error) {
 		return nil, err
 	}
 	return items, nil
+}
+
+const upsertIngredient = `-- name: UpsertIngredient :one
+INSERT INTO ingredients (
+    name,
+    slug,
+    description
+)
+VALUES (
+    $1,
+    $2,
+    $3
+)
+ON CONFLICT (slug)
+DO UPDATE SET
+    name = EXCLUDED.name,
+    description = EXCLUDED.description
+RETURNING id
+`
+
+type UpsertIngredientParams struct {
+	Name        string      `json:"name"`
+	Slug        string      `json:"slug"`
+	Description pgtype.Text `json:"description"`
+}
+
+func (q *Queries) UpsertIngredient(ctx context.Context, arg UpsertIngredientParams) (int32, error) {
+	row := q.db.QueryRow(ctx, upsertIngredient, arg.Name, arg.Slug, arg.Description)
+	var id int32
+	err := row.Scan(&id)
+	return id, err
 }

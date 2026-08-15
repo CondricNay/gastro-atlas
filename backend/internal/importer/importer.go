@@ -7,7 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/CondricNay/gastro-atlas/internal/sqlc"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -54,27 +56,59 @@ func importIngredient(
 	if err != nil {
 		return fmt.Errorf("begin transaction: %w", err)
 	}
+
 	defer tx.Rollback(ctx)
 
-	ingredientID, err := insertIngredient(ctx, tx, ingredient)
+	queries := sqlc.New(db).WithTx(tx)
+
+	ingredientID, err := queries.UpsertIngredient(
+		ctx,
+		sqlc.UpsertIngredientParams{
+			Name: ingredient.Name,
+			Slug: ingredient.Slug,
+			Description: pgtype.Text{
+				String: ingredient.Description,
+				Valid:  ingredient.Description != "",
+			},
+		},
+	)
 	if err != nil {
-		return err
+		return fmt.Errorf("upsert ingredient: %w", err)
 	}
 
 	for _, place := range ingredient.Places {
-		placeID, err := insertPlace(ctx, tx, place)
+		placeID, err := queries.UpsertPlace(
+			ctx,
+			sqlc.UpsertPlaceParams{
+				Name:      place.Name,
+				Type:      place.Type,
+				Latitude:  place.Latitude,
+				Longitude: place.Longitude,
+			},
+		)
 		if err != nil {
-			return err
+			return fmt.Errorf("upsert place %q: %w", place.Name, err)
 		}
 
-		if err := insertIngredientPlace(
+		if err := queries.UpsertIngredientPlace(
 			ctx,
-			tx,
-			ingredientID,
-			placeID,
-			place,
+			sqlc.UpsertIngredientPlaceParams{
+				IngredientID: ingredientID,
+				PlaceID:      placeID,
+				Relationship: place.Relationship,
+				StartYear:    intToPgtype(place.StartYear),
+				EndYear:      intToPgtype(place.EndYear),
+				Notes: pgtype.Text{
+					String: place.Notes,
+					Valid:  place.Notes != "",
+				},
+			},
 		); err != nil {
-			return err
+			return fmt.Errorf(
+				"upsert relationship for %q: %w",
+				place.Name,
+				err,
+			)
 		}
 
 		fmt.Printf("✓ %s\n", place.Name)
@@ -87,118 +121,13 @@ func importIngredient(
 	return nil
 }
 
-func insertIngredient(
-	ctx context.Context,
-	tx pgx.Tx,
-	ingredient IngredientData,
-) (int, error) {
-	var id int
-
-	err := tx.QueryRow(
-		ctx,
-		`
-		INSERT INTO ingredients (name, slug, description)
-		VALUES ($1, $2, $3)
-		ON CONFLICT (slug)
-		DO UPDATE SET
-			name = EXCLUDED.name,
-			description = EXCLUDED.description
-		RETURNING id
-		`,
-		ingredient.Name,
-		ingredient.Slug,
-		ingredient.Description,
-	).Scan(&id)
-
-	if err != nil {
-		return 0, fmt.Errorf("insert ingredient: %w", err)
+func intToPgtype(value *int) pgtype.Int4 {
+	if value == nil {
+		return pgtype.Int4{}
 	}
 
-	return id, nil
-}
-
-func insertPlace(
-	ctx context.Context,
-	tx pgx.Tx,
-	place PlaceData,
-) (int, error) {
-	var id int
-
-	err := tx.QueryRow(
-		ctx,
-		`
-		INSERT INTO places (
-			name,
-			type,
-			latitude,
-			longitude
-		)
-		VALUES ($1, $2, $3, $4)
-		ON CONFLICT (name)
-		DO UPDATE SET
-			type = EXCLUDED.type,
-			latitude = EXCLUDED.latitude,
-			longitude = EXCLUDED.longitude
-		RETURNING id
-		`,
-		place.Name,
-		place.Type,
-		place.Latitude,
-		place.Longitude,
-	).Scan(&id)
-
-	if err != nil {
-		return 0, fmt.Errorf(
-			"insert place %q: %w",
-			place.Name,
-			err,
-		)
+	return pgtype.Int4{
+		Int32: int32(*value),
+		Valid: true,
 	}
-
-	return id, nil
-}
-
-func insertIngredientPlace(
-	ctx context.Context,
-	tx pgx.Tx,
-	ingredientID int,
-	placeID int,
-	place PlaceData,
-) error {
-	_, err := tx.Exec(
-		ctx,
-		`
-		INSERT INTO ingredient_places (
-			ingredient_id,
-			place_id,
-			relationship,
-			start_year,
-			end_year,
-			notes
-		)
-		VALUES ($1, $2, $3, $4, $5, $6)
-		ON CONFLICT (ingredient_id, place_id)
-		DO UPDATE SET
-			relationship = EXCLUDED.relationship,
-			start_year = EXCLUDED.start_year,
-			end_year = EXCLUDED.end_year,
-			notes = EXCLUDED.notes
-		`,
-		ingredientID,
-		placeID,
-		place.Relationship,
-		place.StartYear,
-		place.EndYear,
-		place.Notes,
-	)
-
-	if err != nil {
-		return fmt.Errorf(
-			"insert relationship for %q: %w",
-			place.Name,
-			err,
-		)
-	}
-
-	return nil
 }

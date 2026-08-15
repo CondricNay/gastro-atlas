@@ -3,6 +3,10 @@ package importer
 import "fmt"
 
 func ValidatePlace(place PlaceData) error {
+	if place.Name == "" {
+		return fmt.Errorf("name is required")
+	}
+
 	if place.Latitude < -90 || place.Latitude > 90 {
 		return fmt.Errorf("latitude must be between -90 and 90")
 	}
@@ -12,7 +16,7 @@ func ValidatePlace(place PlaceData) error {
 	}
 
 	// Skip nil checks for now
-	if place.StartYear != nil && place.EndYear != nil && 
+	if place.StartYear != nil && place.EndYear != nil &&
 		*place.StartYear > *place.EndYear {
 		return fmt.Errorf("start year must be before or equal to end year")
 	}

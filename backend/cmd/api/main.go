@@ -27,7 +27,7 @@ func main() {
 	queries := sqlc.New(pool)
 
 	ingredientHandler := handlers.NewIngredientHandler(queries)
-    r := router.SetupRouter(ingredientHandler)
+	r := router.SetupRouter(ingredientHandler)
 
 	log.Println("Server running on :8080")
 
