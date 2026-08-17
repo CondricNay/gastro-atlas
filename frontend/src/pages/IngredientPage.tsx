@@ -6,11 +6,12 @@ import type { Ingredient, Place } from "../types/ingredients";
 
 import Timeline from "../components/Timeline";
 import WorldMap from "../components/WorldMap";
-import { formatHistoricalYear } from "../utils/formatYear";
 import PlaceInfo from "../components/PlaceInfo";
 
 export default function IngredientPage() {
   const { slug } = useParams();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const [ingredient, setIngredient] = useState<Ingredient | null>(null);
 
   const [currentYear, setCurrentYear] = useState<number | null>(null);
@@ -20,7 +21,18 @@ export default function IngredientPage() {
   useEffect(() => {
     if (!slug) return;
 
-    getIngredient(slug).then(setIngredient);
+    setLoading(true);
+    setError(null);
+    setIngredient(null);
+
+    getIngredient(slug)
+      .then(setIngredient)
+      .catch(() => {
+        setError("Failed to load ingredient.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [slug]);
 
   // Set initial timeline year
@@ -34,8 +46,40 @@ export default function IngredientPage() {
     setCurrentYear(earliestYear);
   }, [ingredient]);
 
+  if (loading) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
+        <p className="text-slate-400">Loading ingredient...</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
+        <p className="text-red-400">{error}</p>
+      </main>
+    );
+  }
+
   if (!ingredient || currentYear === null) {
-    return <div>Loading...</div>;
+    return null;
+  }
+
+  if (ingredient.places.length === 0) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold">
+            {ingredient.name}
+          </h1>
+
+          <p className="mt-2 text-slate-400">
+            No historical locations are available yet.
+          </p>
+        </div>
+      </main>
+    );
   }
 
   const minYear = Math.min(
@@ -54,28 +98,49 @@ export default function IngredientPage() {
   }));
 
   return (
-    <main>
-      <WorldMap
-        places={visiblePlaces}
-        onPlaceClick={setSelectedPlace}
-      />
-      <Timeline
-        minYear={minYear}
-        maxYear={maxYear}
-        currentYear={currentYear}
-        onYearChange={setCurrentYear}
-        markers={markers}
-      />
-      <h2>{formatHistoricalYear(currentYear)}</h2>
+    <main className="min-h-screen bg-slate-950 text-white">
+      <div className="mx-auto max-w-7xl px-6 py-8">
 
-      <h1>{ingredient.name}</h1>
-      <p>{ingredient.description}</p>
+        {/* Ingredient header */}
+        <header className="mb-8">
+          <h1 className="text-4xl font-bold">
+            {ingredient.name}
+          </h1>
 
-      <h2>
-        Historical Journey
-      </h2>
+          <p className="mt-3 max-w-3xl text-slate-300">
+            {ingredient.description}
+          </p>
+        </header>
 
-      <PlaceInfo place={selectedPlace} />
+        {/* Main visualization */}
+        <section className="grid gap-6 lg:grid-cols-[1fr_320px]">
+
+          {/* Map */}
+          <div className="rounded-xl bg-slate-900 p-4">
+            <WorldMap
+              places={visiblePlaces}
+              onPlaceClick={setSelectedPlace}
+            />
+          </div>
+
+          {/* Selected place */}
+          <aside className="rounded-xl bg-slate-900 p-6">
+            <PlaceInfo place={selectedPlace} />
+          </aside>
+
+        </section>
+
+        {/* Timeline */}
+        <section className="mt-6 rounded-xl bg-slate-900 p-6">
+          <Timeline
+            minYear={minYear}
+            maxYear={maxYear}
+            currentYear={currentYear}
+            onYearChange={setCurrentYear}
+            markers={markers}
+          />
+        </section>
+      </div>
     </main>
   );
 }

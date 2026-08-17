@@ -7,22 +7,48 @@ interface PlaceInfoProps {
 
 export default function PlaceInfo({ place }: PlaceInfoProps) {
   if (!place) {
-    return null;
+    return (
+      <div className="flex h-full items-center justify-center text-center text-slate-400">
+        <p>Select a location on the map to explore its history.</p>
+      </div>
+    );
   }
 
   return (
-    <section>
-      <h2>{place.name}</h2>
+    <section className="space-y-4">
+      <div>
+        <h2 className="text-2xl font-semibold">
+          {place.name}
+        </h2>
 
-      <p>{place.relationship}</p>
+        <p className="mt-1 text-sm text-slate-400">
+          {place.type}
+        </p>
+      </div>
 
-      <p>{formatHistoricalYear(place.startYear)}</p>
+      <div>
+        <p className="text-sm font-medium text-slate-400">
+          <b>Historical period:</b> 
+          {" "}{formatHistoricalYear(place.startYear)} - 
+          {" "}{place.endYear ? formatHistoricalYear(place.endYear) : "Present"}
+        </p>
+      </div>
 
-      {place.endYear !== null && (
-        <p>to{" "}{formatHistoricalYear(place.endYear)}</p>
+      {place.relationship && (
+        <div>
+          <p className="text-sm font-medium text-slate-400">
+            <b>Relationship:</b> {place.relationship}
+          </p>
+        </div>
       )}
 
-      {place.notes && <p>{place.notes}</p>}
+      {place.notes && (
+        <div>
+          <p className="text-sm font-medium text-slate-400">
+            <b>Notes:</b> {place.notes}
+          </p>
+        </div>
+      )}
     </section>
   );
 }

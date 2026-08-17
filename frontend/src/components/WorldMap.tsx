@@ -123,8 +123,9 @@ export default function WorldMap({
   return (
     <svg
       ref={svgRef}
-      width={width}
-      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      className="h-auto w-full"
+      preserveAspectRatio="xMidYMid meet"
     >
       <g className="countries-layer" />
       <g className="routes-layer" />

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { formatHistoricalYear } from "../utils/formatYear";
 
 interface TimelineMarker {
   year: number;
@@ -64,7 +65,8 @@ export default function Timeline({
             .attr("cx", xScale(currentYear))
             .attr("cy", HEIGHT / 2)
             .attr("r", 10)
-            .attr("fill", "#2563eb");
+            .attr("fill", "#2563eb")
+            .style("cursor", "grab");
 
         const drag = d3.drag<SVGCircleElement, unknown>()
             .on("drag", (event) => {
@@ -77,14 +79,27 @@ export default function Timeline({
 
         handle.call(drag);
 
+        svg.append("line")
+            .attr("x1", xScale(currentYear))
+            .attr("x2", xScale(currentYear))
+            .attr("y1", 25)
+            .attr("y2", HEIGHT - 25)
+            .attr("stroke", "#2563eb")
+            .attr("stroke-width", 2)
+            .attr("stroke-dasharray", "4 4");
+
         svg.append("g")
             .selectAll("circle")
             .data(markers)
             .join("circle")
             .attr("cx", d => xScale(d.year))
             .attr("cy", HEIGHT / 2)
-            .attr("r", 4)
-            .attr("fill", "gray");
+            .attr("r", 5)
+            .attr("fill", "maroon")
+            .style("cursor", "pointer")
+            .on("click", (event, marker) => {
+                onYearChange(marker.year);
+            });
 
         svg.append("g")
             .selectAll("text")
@@ -93,20 +108,20 @@ export default function Timeline({
             .attr("x", d => xScale(d.year))
             .attr("y", HEIGHT / 2 + 25)
             .attr("text-anchor", "middle")
-            .text(d => d.year);
-            
+            .text(d => formatHistoricalYear(d.year));
 
         svg.append("text")
             .attr("x", xScale(currentYear))
             .attr("y", 20)
             .attr("text-anchor", "middle")
-            .text(currentYear);
+            .text(formatHistoricalYear(currentYear));
 
     }, [currentYear, markers, minYear, maxYear, onYearChange]);
 
     return <svg
         ref={svgRef}
-        width={WIDTH}
-        height={HEIGHT}
+        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+        className="h-auto w-full"
+        preserveAspectRatio="none"
     />
 }
