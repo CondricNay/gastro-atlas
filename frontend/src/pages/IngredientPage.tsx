@@ -6,37 +6,52 @@ import type { Ingredient, Place } from "../types/ingredients";
 
 import Timeline from "../components/Timeline";
 import WorldMap from "../components/WorldMap";
+import { formatHistoricalYear } from "../utils/formatYear";
+import PlaceInfo from "../components/PlaceInfo";
 
 export default function IngredientPage() {
   const { slug } = useParams();
   const [ingredient, setIngredient] = useState<Ingredient | null>(null);
-  const minYear = -500;
-  const maxYear = new Date().getFullYear();
-  const [currentYear, setCurrentYear] = useState(-500);
+
+  const [currentYear, setCurrentYear] = useState<number | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
 
+  // Load ingredient
   useEffect(() => {
     if (!slug) return;
 
     getIngredient(slug).then(setIngredient);
   }, [slug]);
 
-  if (!ingredient) {
+  // Set initial timeline year
+  useEffect(() => {
+    if (!ingredient) return;
+
+    const earliestYear = Math.min(
+      ...ingredient.places.map(place => place.startYear)
+    );
+
+    setCurrentYear(earliestYear);
+  }, [ingredient]);
+
+  if (!ingredient || currentYear === null) {
     return <div>Loading...</div>;
   }
+
+  const minYear = Math.min(
+    ...ingredient.places.map(place => place.startYear)
+  );
+
+  const maxYear = new Date().getFullYear();
+
+  const visiblePlaces = ingredient.places.filter(
+    place => place.startYear <= currentYear
+  );
 
   const markers = ingredient.places.map(place => ({
     year: place.startYear,
     label: `${place.relationship}: ${place.name}`,
   }));
-
-  // const visiblePlaces = ingredient.places.filter(place =>
-  //   place.startYear <= currentYear &&
-  //   (place.endYear === null || currentYear <= place.endYear)
-  // );
-  const visiblePlaces = ingredient.places.filter(
-    place => place.startYear <= currentYear
-  );
 
   return (
     <main>
@@ -51,11 +66,7 @@ export default function IngredientPage() {
         onYearChange={setCurrentYear}
         markers={markers}
       />
-      <h2>
-        {currentYear < 0
-          ? `${Math.abs(currentYear)} BCE`
-          : `${currentYear} CE`}
-      </h2>
+      <h2>{formatHistoricalYear(currentYear)}</h2>
 
       <h1>{ingredient.name}</h1>
       <p>{ingredient.description}</p>
@@ -64,31 +75,7 @@ export default function IngredientPage() {
         Historical Journey
       </h2>
 
-      {selectedPlace && (
-        <div>
-          <h2>{selectedPlace.name}</h2>
-          <p>{selectedPlace.relationship}</p>
-          <p>
-            {selectedPlace.startYear < 0
-              ? `${Math.abs(selectedPlace.startYear)} BCE`
-              : `${selectedPlace.startYear} CE`}
-          </p>
-          <p>{selectedPlace.notes}</p>
-        </div>
-      )}
-
-      {/* <ul>
-        {
-          visiblePlaces.map(place => (
-            <li key={place.name}>
-              {place.name}
-              {" - "}
-              {place.relationship}
-              {" ("}{place.startYear}{")"}
-            </li>
-          ))
-        }
-      </ul> */}
+      <PlaceInfo place={selectedPlace} />
     </main>
   );
 }
