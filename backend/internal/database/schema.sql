@@ -29,3 +29,17 @@ CREATE TABLE ingredient_places (
         place_id
     )
 );
+
+CREATE TABLE events (
+    id SERIAL PRIMARY KEY,
+    ingredient_id INT NOT NULL REFERENCES ingredients(id),
+
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    time_period TEXT NOT NULL,
+    entity TEXT NOT NULL,
+    location TEXT NOT NULL,
+
+    sources TEXT[] NOT NULL,
+    confidence TEXT NOT NULL
+);

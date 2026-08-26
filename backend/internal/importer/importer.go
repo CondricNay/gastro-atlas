@@ -114,6 +114,31 @@ func importIngredient(
 		fmt.Printf("✓ %s\n", place.Name)
 	}
 
+	for _, event := range ingredient.Events {
+		_, err := queries.CreateEvent(
+			ctx,
+			sqlc.CreateEventParams{
+				IngredientID: ingredientID,
+				Title:        event.Title,
+				Description:  event.Description,
+				TimePeriod:   event.TimePeriod,
+				Entity:       event.Entity,
+				Location:     event.Location,
+				Sources:      event.Sources,
+				Confidence:   event.Confidence,
+			},
+		)
+		if err != nil {
+			return fmt.Errorf(
+				"create event %q: %w",
+				event.Title,
+				err,
+			)
+		}
+
+		fmt.Printf("✓ %s\n", event.Title)
+	}
+
 	if err := tx.Commit(ctx); err != nil {
 		return fmt.Errorf("commit transaction: %w", err)
 	}

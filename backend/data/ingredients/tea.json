@@ -2,66 +2,66 @@
   "slug": "tea",
   "name": "Tea",
   "description": "A beverage made from the leaves of Camellia sinensis, cultivated and consumed in East Asia before spreading across Asia and eventually becoming a global commodity.",
-  "places": [
+  "events": [
     {
-      "name": "China",
-      "type": "country",
-      "latitude": 35.8617,
-      "longitude": 104.1954,
-      "relationship": "origin",
-      "startYear": -200,
-      "endYear": null,
-      "notes": "Tea has a long history of cultivation and consumption in China, where traditions of tea drinking developed over many centuries."
+      "id": 1,
+      "title": "Tea was cultivated and consumed in China",
+      "description": "Tea has a long history of cultivation and consumption in China, where traditions of tea drinking developed over many centuries.",
+      "time_period": "Around 200 BCE",
+      "entity": "Chinese people",
+      "location": "China",
+      "sources": [],
+      "confidence": "medium"
     },
     {
-      "name": "Japan",
-      "type": "country",
-      "latitude": 36.2048,
-      "longitude": 138.2529,
-      "relationship": "introduced",
-      "startYear": 800,
-      "endYear": null,
-      "notes": "Tea was introduced to Japan from China, with Buddhist monks playing an important role in its early transmission."
+      "id": 2,
+      "title": "Tea was introduced to Korea",
+      "description": "Tea cultivation and consumption reached Korea through cultural and religious connections with China.",
+      "time_period": "Around 700",
+      "entity": "Chinese and Korean people",
+      "location": "Korea",
+      "sources": [],
+      "confidence": "medium"
     },
     {
-      "name": "Korea",
-      "type": "country",
-      "latitude": 35.9078,
-      "longitude": 127.7669,
-      "relationship": "introduced",
-      "startYear": 700,
-      "endYear": null,
-      "notes": "Tea cultivation and consumption reached Korea through cultural and religious connections with China."
+      "id": 3,
+      "title": "Tea was introduced to Japan",
+      "description": "Tea was introduced to Japan from China, with Buddhist monks playing an important role in its early transmission.",
+      "time_period": "Around 800",
+      "entity": "Buddhist monks",
+      "location": "Japan",
+      "sources": [],
+      "confidence": "medium"
     },
     {
-      "name": "India",
-      "type": "country",
-      "latitude": 20.5937,
-      "longitude": 78.9629,
-      "relationship": "cultivated",
-      "startYear": 1800,
-      "endYear": null,
-      "notes": "Large-scale commercial tea cultivation developed in India during the British colonial period."
+      "id": 4,
+      "title": "Tea became popular in Britain",
+      "description": "Tea became increasingly popular in Britain after being introduced through international trade, eventually becoming an important part of British culture.",
+      "time_period": "Around 1600",
+      "entity": "British people",
+      "location": "United Kingdom",
+      "sources": [],
+      "confidence": "medium"
     },
     {
-      "name": "Sri Lanka",
-      "type": "country",
-      "latitude": 7.8731,
-      "longitude": 80.7718,
-      "relationship": "cultivated",
-      "startYear": 1870,
-      "endYear": null,
-      "notes": "Commercial tea cultivation expanded rapidly in Sri Lanka during the nineteenth century."
+      "id": 5,
+      "title": "Commercial tea cultivation developed in India",
+      "description": "Large-scale commercial tea cultivation developed in India during the British colonial period.",
+      "time_period": "Around 1800",
+      "entity": "British colonial planters",
+      "location": "India",
+      "sources": [],
+      "confidence": "medium"
     },
     {
-      "name": "United Kingdom",
-      "type": "country",
-      "latitude": 55.3781,
-      "longitude": -3.4360,
-      "relationship": "popularized",
-      "startYear": 1600,
-      "endYear": null,
-      "notes": "Tea became increasingly popular in Britain after being introduced through international trade, eventually becoming an important part of British culture."
+      "id": 6,
+      "title": "Commercial tea cultivation expanded in Sri Lanka",
+      "description": "Commercial tea cultivation expanded rapidly in Sri Lanka during the nineteenth century.",
+      "time_period": "1870",
+      "entity": "British colonial planters",
+      "location": "Sri Lanka",
+      "sources": [],
+      "confidence": "medium"
     }
   ]
 }

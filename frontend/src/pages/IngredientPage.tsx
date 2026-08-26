@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { getIngredient } from "../api/ingredients";
 import type { Ingredient, Place } from "../types/ingredients";
+import { convertEventToPlace } from "../utils/eventConverter";
 
 import Timeline from "../components/Timeline";
 import WorldMap from "../components/WorldMap";
@@ -39,8 +40,10 @@ export default function IngredientPage() {
   useEffect(() => {
     if (!ingredient) return;
 
+    const places = ingredient.events.map(convertEventToPlace)
+
     const earliestYear = Math.min(
-      ...ingredient.places.map(place => place.startYear)
+      ...places.map(place => place.startYear)
     );
 
     setCurrentYear(earliestYear);
@@ -66,7 +69,9 @@ export default function IngredientPage() {
     return null;
   }
 
-  if (ingredient.places.length === 0) {
+  const places = ingredient.events.map(convertEventToPlace);
+
+  if (places.length === 0) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
         <div className="text-center">
@@ -83,16 +88,16 @@ export default function IngredientPage() {
   }
 
   const minYear = Math.min(
-    ...ingredient.places.map(place => place.startYear)
+    ...places.map(place => place.startYear)
   );
 
   const maxYear = new Date().getFullYear();
 
-  const visiblePlaces = ingredient.places.filter(
+  const visiblePlaces = places.filter(
     place => place.startYear <= currentYear
   );
 
-  const markers = ingredient.places.map(place => ({
+  const markers = places.map(place => ({
     year: place.startYear,
     label: `${place.relationship}: ${place.name}`,
   }));

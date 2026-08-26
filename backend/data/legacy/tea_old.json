@@ -1,0 +1,67 @@
+{
+  "slug": "tea",
+  "name": "Tea",
+  "description": "A beverage made from the leaves of Camellia sinensis, cultivated and consumed in East Asia before spreading across Asia and eventually becoming a global commodity.",
+  "places": [
+    {
+      "name": "China",
+      "type": "country",
+      "latitude": 35.8617,
+      "longitude": 104.1954,
+      "relationship": "origin",
+      "startYear": -200,
+      "endYear": null,
+      "notes": "Tea has a long history of cultivation and consumption in China, where traditions of tea drinking developed over many centuries."
+    },
+    {
+      "name": "Japan",
+      "type": "country",
+      "latitude": 36.2048,
+      "longitude": 138.2529,
+      "relationship": "introduced",
+      "startYear": 800,
+      "endYear": null,
+      "notes": "Tea was introduced to Japan from China, with Buddhist monks playing an important role in its early transmission."
+    },
+    {
+      "name": "Korea",
+      "type": "country",
+      "latitude": 35.9078,
+      "longitude": 127.7669,
+      "relationship": "introduced",
+      "startYear": 700,
+      "endYear": null,
+      "notes": "Tea cultivation and consumption reached Korea through cultural and religious connections with China."
+    },
+    {
+      "name": "India",
+      "type": "country",
+      "latitude": 20.5937,
+      "longitude": 78.9629,
+      "relationship": "cultivated",
+      "startYear": 1800,
+      "endYear": null,
+      "notes": "Large-scale commercial tea cultivation developed in India during the British colonial period."
+    },
+    {
+      "name": "Sri Lanka",
+      "type": "country",
+      "latitude": 7.8731,
+      "longitude": 80.7718,
+      "relationship": "cultivated",
+      "startYear": 1870,
+      "endYear": null,
+      "notes": "Commercial tea cultivation expanded rapidly in Sri Lanka during the nineteenth century."
+    },
+    {
+      "name": "United Kingdom",
+      "type": "country",
+      "latitude": 55.3781,
+      "longitude": -3.4360,
+      "relationship": "popularized",
+      "startYear": 1600,
+      "endYear": null,
+      "notes": "Tea became increasingly popular in Britain after being introduced through international trade, eventually becoming an important part of British culture."
+    }
+  ]
+}

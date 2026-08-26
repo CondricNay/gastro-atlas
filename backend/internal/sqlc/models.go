@@ -8,6 +8,18 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type Event struct {
+	ID           int32    `json:"id"`
+	IngredientID int32    `json:"ingredientId"`
+	Title        string   `json:"title"`
+	Description  string   `json:"description"`
+	TimePeriod   string   `json:"timePeriod"`
+	Entity       string   `json:"entity"`
+	Location     string   `json:"location"`
+	Sources      []string `json:"sources"`
+	Confidence   string   `json:"confidence"`
+}
+
 type Ingredient struct {
 	ID          int32       `json:"id"`
 	Name        string      `json:"name"`

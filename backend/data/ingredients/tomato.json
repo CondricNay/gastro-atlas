@@ -1,47 +1,139 @@
 {
   "slug": "tomato",
   "name": "Tomato",
-  "description": "A fruit native to the Americas that became a major ingredient in cuisines worldwide.",
-  "places": [
+  "description": "A fruit native to the Americas that has undergone centuries of cultivation and hybridization and is now grown and eaten around the world.",
+  "events": [
     {
-      "name": "Andes Region",
-      "type": "region",
-      "latitude": -13.5,
-      "longitude": -72.0,
-      "relationship": "origin",
-      "startYear": -500,
-      "endYear": 1500,
-      "notes": "Wild tomato relatives and early cultivation are associated with the Andes region."
+      "id": 1,
+      "title": "Tomatoes grew wild in the Andes",
+      "description": "Tomatoes grew wild in the Andes of western South America before Europeans arrived in the Americas.",
+      "time_period": "Before European contact",
+      "entity": "Indigenous people",
+      "location": "Andes, South America",
+      "sources": [
+        "uvm-tomato-history"
+      ],
+      "confidence": "high"
     },
     {
-      "name": "Mesoamerica",
-      "type": "region",
-      "latitude": 17.0,
-      "longitude": -92.0,
-      "relationship": "cultivation",
-      "startYear": -500,
-      "endYear": 1500,
-      "notes": "Tomatoes were cultivated and incorporated into local cuisines."
+      "id": 2,
+      "title": "Tomatoes were cultivated and spread northward",
+      "description": "Indigenous people cultivated tomatoes and eventually brought the plant northward through Central America and into Mexico.",
+      "time_period": "Before European contact",
+      "entity": "Indigenous people",
+      "location": "Central America",
+      "sources": [
+        "uvm-tomato-history"
+      ],
+      "confidence": "high"
     },
     {
-      "name": "Spanish Empire",
-      "type": "empire",
-      "latitude": 40.4168,
-      "longitude": -3.7038,
-      "relationship": "introduced",
-      "startYear": 1500,
-      "endYear": null,
-      "notes": "Tomatoes were brought to Europe after Spanish contact with the Americas."
+      "id": 3,
+      "title": "Tomatoes were cultivated in Mexico",
+      "description": "When the Spanish arrived in the early 16th century, they found inhabitants growing tomatoes as a food crop called \"tomatl\".",
+      "time_period": "Early 16th century",
+      "entity": "Indigenous people",
+      "location": "Mexico",
+      "sources": [
+        "uvm-tomato-history"
+      ],
+      "confidence": "high"
     },
     {
-      "name": "Italy",
-      "type": "country",
-      "latitude": 41.9028,
-      "longitude": 12.4964,
-      "relationship": "popularized",
-      "startYear": 1700,
-      "endYear": null,
-      "notes": "Tomatoes became central to Italian cuisine, especially sauces."
+      "id": 4,
+      "title": "Tomatoes were introduced to Spain",
+      "description": "Tomato seeds were brought from Mexico to Spain by early Spanish explorers.",
+      "time_period": "Early 16th century",
+      "entity": "Spanish explorers",
+      "location": "Spain",
+      "sources": [
+        "uvm-tomato-history"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": 5,
+      "title": "Tomatoes spread to Italy",
+      "description": "After reaching Spain, tomatoes spread to Italy and began to be incorporated into regional cuisine.",
+      "time_period": "Mid-1500s",
+      "entity": "Italians",
+      "location": "Italy",
+      "sources": [
+        "uvm-tomato-history"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": 6,
+      "title": "Tomatoes spread throughout Europe",
+      "description": "Over the following decades, tomato plants were cultivated throughout Europe, primarily as ornamental plants.",
+      "time_period": "Following decades",
+      "entity": "Europeans",
+      "location": "Europe",
+      "sources": [
+        "uvm-tomato-history"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": 7,
+      "title": "Tomatoes were considered poisonous",
+      "description": "Many Europeans mistakenly believed tomatoes were poisonous, contributing to names such as \"poison apple.\"",
+      "time_period": "Early European cultivation",
+      "entity": "Europeans",
+      "location": "Europe",
+      "sources": [
+        "uvm-tomato-history"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": 8,
+      "title": "Tomatoes returned to the Americas",
+      "description": "Tomatoes were brought back to the Americas by European colonists.",
+      "time_period": "Early 1700s",
+      "entity": "European colonists",
+      "location": "Americas",
+      "sources": [
+        "uvm-tomato-history"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": 9,
+      "title": "Tomatoes were grown by Thomas Jefferson",
+      "description": "Thomas Jefferson reportedly grew tomatoes in his vegetable garden at Monticello and enjoyed eating the fruit.",
+      "time_period": "18th century",
+      "entity": "Thomas Jefferson",
+      "location": "Monticello, Virginia",
+      "sources": [
+        "uvm-tomato-history"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": 10,
+      "title": "Tomatoes became widely popular in the United States",
+      "description": "Tomato popularity became widespread throughout the United States.",
+      "time_period": "Early 1900s",
+      "entity": "Americans",
+      "location": "United States",
+      "sources": [
+        "uvm-tomato-history"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": 11,
+      "title": "Tomatoes were legally classified as vegetables",
+      "description": "The U.S. Supreme Court case Nix v. Hedden resulted in tomatoes being considered vegetables for tariff purposes.",
+      "time_period": "1893",
+      "entity": "U.S. Supreme Court",
+      "location": "United States",
+      "sources": [
+        "uvm-tomato-history"
+      ],
+      "confidence": "high"
     }
   ]
 }

@@ -5,6 +5,7 @@ type IngredientData struct {
 	Name        string      `json:"name"`
 	Description string      `json:"description"`
 	Places      []PlaceData `json:"places"`
+	Events      []EventData `json:"events"`
 }
 
 type PlaceData struct {
@@ -16,4 +17,15 @@ type PlaceData struct {
 	StartYear    *int    `json:"startYear"`
 	EndYear      *int    `json:"endYear"`
 	Notes        string  `json:"notes"`
+}
+
+type EventData struct {
+	ID          int      `json:"id"`
+	Title       string   `json:"title"`
+	Description string   `json:"description"`
+	TimePeriod  string   `json:"time_period"`
+	Entity      string   `json:"entity"`
+	Location    string   `json:"location"`
+	Sources     []string `json:"sources"`
+	Confidence  string   `json:"confidence"`
 }
