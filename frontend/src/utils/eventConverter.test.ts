@@ -10,7 +10,7 @@ describe("convertEventToPlace", () => {
       title: "Tomatoes were introduced to Spain",
       description:
         "Tomato seeds were brought from Mexico to Spain by early Spanish explorers.",
-      time: "Early 16th century",
+      timePeriod: "Early 16th century",
       entity: "Spanish explorers",
       location: "Spain",
       sources: ["uvm-tomato-history"],

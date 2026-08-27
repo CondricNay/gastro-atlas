@@ -52,41 +52,21 @@ func seedTestIngredient(
 		t.Fatalf("insert test ingredient: %v", err)
 	}
 
-	placeID, err := queries.UpsertPlace(
+	_, err = queries.CreateEvent(
 		ctx,
-		sqlc.UpsertPlaceParams{
-			Name:      "Test Mexico",
-			Type:      "origin",
-			Latitude:  19.4326,
-			Longitude: -99.1332,
-		},
-	)
-	if err != nil {
-		t.Fatalf("insert test place: %v", err)
-	}
-
-	err = queries.UpsertIngredientPlace(
-		ctx,
-		sqlc.UpsertIngredientPlaceParams{
+		sqlc.CreateEventParams{
 			IngredientID: ingredientID,
-			PlaceID:      placeID,
-			Relationship: "origin",
-			StartYear: pgtype.Int4{
-				Int32: 1500,
-				Valid: true,
-			},
-			EndYear: pgtype.Int4{
-				Int32: 1600,
-				Valid: true,
-			},
-			Notes: pgtype.Text{
-				String: "Test place",
-				Valid:  true,
-			},
+			Title:        "Tomato reaches Europe",
+			Description:  "Tomatoes were introduced to Europe.",
+			TimePeriod:   "Late 15th century",
+			Entity:       "introduction",
+			Location:     "Spain",
+			Sources:      []string{},
+			Confidence:   "high",
 		},
 	)
 	if err != nil {
-		t.Fatalf("insert ingredient place: %v", err)
+		t.Fatalf("insert test event: %v", err)
 	}
 }
 
@@ -131,6 +111,14 @@ func TestGetIngredients(t *testing.T) {
 		)
 	}
 
+	if response[0].Name != "Test Tomato" {
+		t.Errorf(
+			"expected name %q, got %q",
+			"Test Tomato",
+			response[0].Name,
+		)
+	}
+
 	if response[0].Slug != "test-tomato" {
 		t.Errorf(
 			"expected slug %q, got %q",
@@ -165,15 +153,30 @@ func TestGetIngredientBySlug(t *testing.T) {
 	var response struct {
 		Name   string `json:"name"`
 		Slug   string `json:"slug"`
-		Places []struct {
-			Name string `json:"name"`
-		} `json:"places"`
+		Events []struct {
+			ID          int      `json:"id"`
+			Title       string   `json:"title"`
+			Description string   `json:"description"`
+			TimePeriod  string   `json:"timePeriod"`
+			Entity      string   `json:"entity"`
+			Location    string   `json:"location"`
+			Sources     []string `json:"sources"`
+			Confidence  string   `json:"confidence"`
+		} `json:"events"`
 	}
 
 	if err := json.Unmarshal(rec.Body.Bytes(), &response); err != nil {
 		t.Fatalf(
 			"response is not valid JSON: %v",
 			err,
+		)
+	}
+
+	if response.Name != "Test Tomato" {
+		t.Errorf(
+			"expected name %q, got %q",
+			"Test Tomato",
+			response.Name,
 		)
 	}
 
@@ -185,19 +188,69 @@ func TestGetIngredientBySlug(t *testing.T) {
 		)
 	}
 
-	if len(response.Places) != 1 {
+	if len(response.Events) != 1 {
 		t.Fatalf(
-			"expected 1 place, got %d",
-			len(response.Places),
+			"expected 1 event, got %d",
+			len(response.Events),
 		)
 	}
 
-	if response.Places[0].Name != "Test Mexico" {
+	event := response.Events[0]
+
+	if event.ID == 0 {
+		t.Error("expected event ID to be non-zero")
+	}
+
+	if event.Title != "Tomato reaches Europe" {
 		t.Errorf(
-			"expected place %q, got %q",
-			"Test Mexico",
-			response.Places[0].Name,
+			"expected event title %q, got %q",
+			"Tomato reaches Europe",
+			event.Title,
 		)
+	}
+
+	if event.Description != "Tomatoes were introduced to Europe." {
+		t.Errorf(
+			"expected event description %q, got %q",
+			"Tomatoes were introduced to Europe.",
+			event.Description,
+		)
+	}
+
+	if event.TimePeriod != "Late 15th century" {
+		t.Errorf(
+			"expected time period %q, got %q",
+			"Late 15th century",
+			event.TimePeriod,
+		)
+	}
+
+	if event.Entity != "introduction" {
+		t.Errorf(
+			"expected entity %q, got %q",
+			"introduction",
+			event.Entity,
+		)
+	}
+
+	if event.Location != "Spain" {
+		t.Errorf(
+			"expected location %q, got %q",
+			"Spain",
+			event.Location,
+		)
+	}
+
+	if event.Confidence != "high" {
+		t.Errorf(
+			"expected confidence %q, got %q",
+			"high",
+			event.Confidence,
+		)
+	}
+
+	if event.Sources == nil {
+		t.Error("expected sources to be non-nil")
 	}
 }
 

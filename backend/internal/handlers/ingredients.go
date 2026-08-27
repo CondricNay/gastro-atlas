@@ -50,26 +50,6 @@ func (h *IngredientHandler) GetIngredientBySlug(c *gin.Context) {
 		return
 	}
 
-	// places, err := h.queries.GetIngredientPlaces(
-	// 	c.Request.Context(),
-	// 	ingredient.ID,
-	// )
-
-	// if err != nil {
-	// 	c.JSON(500, gin.H{
-	// 		"error": err.Error(),
-	// 	})
-	// 	return
-	// }
-
-	// c.JSON(200, gin.H{
-	// 	"id":          ingredient.ID,
-	// 	"slug":        ingredient.Slug,
-	// 	"name":        ingredient.Name,
-	// 	"description": ingredient.Description,
-	// 	"places":      places,
-	// })
-
 	c.JSON(200, gin.H{
 		"id":          ingredient.ID,
 		"slug":        ingredient.Slug,

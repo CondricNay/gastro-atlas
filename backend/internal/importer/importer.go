@@ -76,44 +76,6 @@ func importIngredient(
 		return fmt.Errorf("upsert ingredient: %w", err)
 	}
 
-	for _, place := range ingredient.Places {
-		placeID, err := queries.UpsertPlace(
-			ctx,
-			sqlc.UpsertPlaceParams{
-				Name:      place.Name,
-				Type:      place.Type,
-				Latitude:  place.Latitude,
-				Longitude: place.Longitude,
-			},
-		)
-		if err != nil {
-			return fmt.Errorf("upsert place %q: %w", place.Name, err)
-		}
-
-		if err := queries.UpsertIngredientPlace(
-			ctx,
-			sqlc.UpsertIngredientPlaceParams{
-				IngredientID: ingredientID,
-				PlaceID:      placeID,
-				Relationship: place.Relationship,
-				StartYear:    intToPgtype(place.StartYear),
-				EndYear:      intToPgtype(place.EndYear),
-				Notes: pgtype.Text{
-					String: place.Notes,
-					Valid:  place.Notes != "",
-				},
-			},
-		); err != nil {
-			return fmt.Errorf(
-				"upsert relationship for %q: %w",
-				place.Name,
-				err,
-			)
-		}
-
-		fmt.Printf("✓ %s\n", place.Name)
-	}
-
 	for _, event := range ingredient.Events {
 		_, err := queries.CreateEvent(
 			ctx,
@@ -144,15 +106,4 @@ func importIngredient(
 	}
 
 	return nil
-}
-
-func intToPgtype(value *int) pgtype.Int4 {
-	if value == nil {
-		return pgtype.Int4{}
-	}
-
-	return pgtype.Int4{
-		Int32: int32(*value),
-		Valid: true,
-	}
 }

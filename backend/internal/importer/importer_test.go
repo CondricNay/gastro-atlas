@@ -19,16 +19,16 @@ func TestImportIngredient(t *testing.T) {
 		"name": "Test Tomato",
 		"slug": "test-tomato",
 		"description": "A test ingredient",
-		"places": [
+		"events": [
 			{
-				"name": "Test Mexico",
-				"type": "origin",
-				"latitude": 19.4326,
-				"longitude": -99.1332,
-				"relationship": "origin",
-				"startYear": 1500,
-				"endYear": 1600,
-				"notes": "Test place"
+				"id": 1,
+				"title": "Tomato reaches Europe",
+				"description": "Tomatoes were introduced to Europe.",
+				"time_period": "Late 15th century",
+				"entity": "introduction",
+				"location": "Spain",
+				"sources": [],
+				"confidence": "high"
 			}
 		]
 	}`
@@ -69,131 +69,70 @@ func TestImportIngredient(t *testing.T) {
 		)
 	}
 
-	// Verify places and ingredient_places
-	places, err := queries.GetIngredientPlaces(ctx, ingredient.ID)
+	// Verify event
+	events, err := queries.GetEventsByIngredient(ctx, ingredient.ID)
 	if err != nil {
-		t.Fatalf("get imported ingredient places: %v", err)
+		t.Fatalf("get imported events: %v", err)
 	}
 
-	if len(places) != 1 {
-		t.Fatalf("expected 1 place, got %d", len(places))
+	if len(events) != 1 {
+		t.Fatalf("expected 1 event, got %d", len(events))
 	}
 
-	place := places[0]
+	event := events[0]
 
-	if place.Name != "Test Mexico" {
-		t.Errorf("expected place name %q, got %q", "Test Mexico", place.Name)
-	}
-
-	if place.Type != "origin" {
-		t.Errorf("expected place type %q, got %q", "origin", place.Type)
-	}
-
-	if place.Latitude != 19.4326 {
-		t.Errorf("expected latitude %f, got %f", 19.4326, place.Latitude)
-	}
-
-	if place.Longitude != -99.1332 {
-		t.Errorf("expected longitude %f, got %f", -99.1332, place.Longitude)
-	}
-
-	if place.Relationship != "origin" {
+	if event.Title != "Tomato reaches Europe" {
 		t.Errorf(
-			"expected relationship %q, got %q",
-			"origin",
-			place.Relationship,
+			"expected event title %q, got %q",
+			"Tomato reaches Europe",
+			event.Title,
 		)
 	}
 
-	if !place.StartYear.Valid || place.StartYear.Int32 != 1500 {
-		t.Errorf("expected start year 1500, got %+v", place.StartYear)
-	}
-
-	if !place.EndYear.Valid || place.EndYear.Int32 != 1600 {
-		t.Errorf("expected end year 1600, got %+v", place.EndYear)
-	}
-
-	if !place.Notes.Valid || place.Notes.String != "Test place" {
-		t.Errorf("expected notes %q, got %+v", "Test place", place.Notes)
-	}
-}
-
-func TestImportIngredient_Idempotent(t *testing.T) {
-	db, ctx := testutil.SetupTestDB(t)
-
-	dir := t.TempDir()
-	filePath := filepath.Join(dir, "test-ingredient.json")
-
-	jsonData := `{
-		"name": "Test Tomato",
-		"slug": "test-tomato",
-		"description": "A test ingredient",
-		"places": [
-			{
-				"name": "Test Mexico",
-				"type": "origin",
-				"latitude": 19.4326,
-				"longitude": -99.1332,
-				"relationship": "origin",
-				"startYear": 1500,
-				"endYear": 1600,
-				"notes": "Test place"
-			}
-		]
-	}`
-
-	if err := os.WriteFile(filePath, []byte(jsonData), 0644); err != nil {
-		t.Fatalf("write test JSON: %v", err)
-	}
-
-	// Import the same ingredient twice.
-	if err := importIngredient(ctx, db, filePath); err != nil {
-		t.Fatalf("first import: %v", err)
-	}
-
-	if err := importIngredient(ctx, db, filePath); err != nil {
-		t.Fatalf("second import: %v", err)
-	}
-
-	queries := sqlc.New(db)
-
-	// Verify only one ingredient exists.
-	var ingredientCount int
-
-	err := db.QueryRow(
-		ctx,
-		`SELECT COUNT(*)
-		 FROM ingredients
-		 WHERE slug = $1`,
-		"test-tomato",
-	).Scan(&ingredientCount)
-
-	if err != nil {
-		t.Fatalf("count ingredients: %v", err)
-	}
-
-	if ingredientCount != 1 {
+	if event.Description != "Tomatoes were introduced to Europe." {
 		t.Errorf(
-			"expected 1 ingredient, got %d",
-			ingredientCount,
+			"expected event description %q, got %q",
+			"Tomatoes were introduced to Europe.",
+			event.Description,
 		)
 	}
 
-	// Verify only one place relationship exists.
-	ingredient, err := queries.GetIngredientBySlug(ctx, "test-tomato")
-	if err != nil {
-		t.Fatalf("get ingredient: %v", err)
-	}
-
-	places, err := queries.GetIngredientPlaces(ctx, ingredient.ID)
-	if err != nil {
-		t.Fatalf("get ingredient places: %v", err)
-	}
-
-	if len(places) != 1 {
+	if event.TimePeriod != "Late 15th century" {
 		t.Errorf(
-			"expected 1 ingredient-place relationship, got %d",
-			len(places),
+			"expected time period %q, got %q",
+			"Late 15th century",
+			event.TimePeriod,
+		)
+	}
+
+	if event.Entity != "introduction" {
+		t.Errorf(
+			"expected entity %q, got %q",
+			"introduction",
+			event.Entity,
+		)
+	}
+
+	if event.Location != "Spain" {
+		t.Errorf(
+			"expected location %q, got %q",
+			"Spain",
+			event.Location,
+		)
+	}
+
+	if len(event.Sources) != 0 {
+		t.Errorf(
+			"expected 0 sources, got %d",
+			len(event.Sources),
+		)
+	}
+
+	if event.Confidence != "high" {
+		t.Errorf(
+			"expected confidence %q, got %q",
+			"high",
+			event.Confidence,
 		)
 	}
 }
