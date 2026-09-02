@@ -1,0 +1,34 @@
+{
+  "name": "Tomato Classification and Legal Status",
+  "slug": "tomato-classification-and-legal-status",
+  "description": "Tomatoes became increasingly popular throughout the United States in the early 1900s. In 1893, the U.S. Supreme Court considered the classification of tomatoes in Nix v. Hedden. The case concerned the Tariff Act of March 3, 1883.",
+  "events": [
+    {
+      "title": "Tomato Popularity in the U.S.",
+      "description": "Tomatoes became increasingly popular throughout the United States in the early 1900s.",
+      "time_period": null,
+      "entity": "Tomatoes",
+      "location": "United States",
+      "sources": [],
+      "confidence": "high"
+    },
+    {
+      "title": "U.S. Supreme Court Case on Tomatoes",
+      "description": "In 1893, the U.S. Supreme Court considered the classification of tomatoes in Nix v. Hedden.",
+      "time_period": null,
+      "entity": "U.S. Supreme Court",
+      "location": "United States",
+      "sources": [],
+      "confidence": "high"
+    },
+    {
+      "title": "Tariff Act of 1883",
+      "description": "The case concerned the Tariff Act of March 3, 1883.",
+      "time_period": null,
+      "entity": "Tariff Act",
+      "location": "United States",
+      "sources": [],
+      "confidence": "high"
+    }
+  ]
+}
