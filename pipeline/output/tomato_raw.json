@@ -1,0 +1,135 @@
+{
+  "name": "February 8, 2023",
+  "slug": "february-8-2023",
+  "description": "February 8, 2023",
+  "events": [
+    {
+      "title": "United Nations adopts resolution on climate action plan",
+      "description": "On February 8, 2023, the United Nations adopted a resolution to strengthen global efforts to combat climate change by increasing funding for renewable energy initiatives.",
+      "time_period": "2023",
+      "entity": "United Nations",
+      "location": "New York, New York, USA",
+      "confidence": "high"
+    },
+    {
+      "title": "Major tech company launches AI ethics guidelines",
+      "description": "A major tech company announced the launch of new AI ethics guidelines to ensure responsible development and use of artificial intelligence technologies.",
+      "time_period": "early 2020s",
+      "entity": "Major tech company",
+      "location": "Silicon Valley, California, USA",
+      "confidence": "medium"
+    },
+    {
+      "title": "Record-breaking snowfall in Northern Europe",
+      "description": "A record-breaking snowfall of over 2 meters occurred in Northern Europe, causing travel disruptions across several countries.",
+      "time_period": "mid-1500s",
+      "entity": "Northern Europe",
+      "location": "Northern Europe",
+      "confidence": "medium"
+    },
+    {
+      "title": "Historical event in literature",
+      "description": "A historical event occurred on February 8, 2023, in a small village in the United Kingdom.",
+      "time_period": "1883",
+      "entity": "United Kingdom",
+      "location": "United Kingdom",
+      "confidence": "low"
+    },
+    {
+      "title": "Origin in the Andes of Western South America",
+      "description": "Tomatoes originated in the Andes of western South America, where they were first cultivated by indigenous peoples long before European contact.",
+      "time_period": "pre-1500s",
+      "entity": "Andes of western South America",
+      "location": "Andes of western South America",
+      "confidence": "high"
+    },
+    {
+      "title": "Introduction to Europe",
+      "description": "The tomato was introduced to Europe in the early 16th century by Spanish explorers who encountered it in the New World.",
+      "time_period": "early 1500s",
+      "entity": "Spanish explorers",
+      "location": "New World",
+      "confidence": "high"
+    },
+    {
+      "title": "Modern Cultivation and Hybridization",
+      "description": "Over the centuries, tomatoes have undergone extensive cultivation and hybridization, leading to the development of numerous varieties such as the Mortgage Lifter and Big Boy.",
+      "time_period": "mid-1800s",
+      "entity": "tomato",
+      "location": "various locations",
+      "confidence": "medium"
+    },
+    {
+      "title": "Introduction to Spain",
+      "description": "Tomato seeds were brought to Spain in the mid-1500s by early explorers.",
+      "time_period": "mid-1500s",
+      "entity": "Tomato",
+      "location": "Spain",
+      "confidence": "high"
+    },
+    {
+      "title": "Cultural Naming and Misconceptions",
+      "description": "In France, the tomato was called a love apple and thought to be an aphrodisiac due to its resemblance to deadly nightshade.",
+      "time_period": null,
+      "entity": "France",
+      "location": "France",
+      "confidence": "high"
+    },
+    {
+      "title": "Toxicity",
+      "description": "The tomato contains solanine in its leaves and roots, making the leaves and roots toxic.",
+      "time_period": null,
+      "entity": "Tomato",
+      "location": "Global",
+      "confidence": "high"
+    },
+    {
+      "title": "Origin of the Tomato's Association with Lead Poisoning",
+      "description": "In the early 1700s, tomatoes were believed to be poisonous due to their association with lead poisoning, which was attributed to the use of pewter dinnerware. The high acidity of tomatoes caused lead to leach from the pewter, leading to poisoning in those who consumed tomato-based dishes.",
+      "time_period": "early 1700s",
+      "entity": "Tomato",
+      "location": "Northern colonies",
+      "confidence": "medium"
+    },
+    {
+      "title": "Rise of Tomato Popularity in the United States",
+      "description": "Tomatoes became more popular in the United States in the early 1900s, as they were initially grown as ornamental plants in the northern colonies but gained popularity in the early 1900s.",
+      "time_period": "early 1900s",
+      "entity": "Tomato",
+      "location": "United States",
+      "confidence": "medium"
+    },
+    {
+      "title": "Origin and Cultivation",
+      "description": "Tomatoes are grown around the world and are a star of international cuisine. They are cultivated in home gardens and on commercial farms.",
+      "time_period": "1830s",
+      "entity": "Tomato",
+      "location": "Global",
+      "confidence": "high"
+    },
+    {
+      "title": "Culinary Use",
+      "description": "They are eaten raw, served in a variety of dishes and processed into products that line our supermarket shelves.",
+      "time_period": "1830s",
+      "entity": "Tomato",
+      "location": "Global",
+      "confidence": "high"
+    },
+    {
+      "title": "Botanical Classification",
+      "description": "Botanically, a tomato is a fruit because it develops from the ovary of a flower and contains seeds.",
+      "time_period": "1830s",
+      "entity": "Tomato",
+      "location": "null",
+      "confidence": "high"
+    },
+    {
+      "title": "Legal Classification",
+      "description": "In 1893, the U.S. Supreme Court ruled in the case of Nix v. Hedden that tomatoes are considered a vegetable for legal purposes, such as taxation.",
+      "time_period": "1893",
+      "entity": "U.S. Supreme Court",
+      "location": "United States",
+      "confidence": "high"
+    }
+  ]
+}

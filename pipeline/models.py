@@ -9,7 +9,7 @@ class HistoricalEvent(BaseModel):
     time_period: str | None = Field(default=None)
     entity: str
     location: str
-    sources: list[str] = Field(default_factory=list)
+    # sources: list[str] = Field(default_factory=list)
     confidence: Literal["high", "medium", "low"]
 
 

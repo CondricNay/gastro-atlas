@@ -1,0 +1,138 @@
+{
+  "name": "February 8, 2023",
+  "slug": "february-8-2023",
+  "description": "",
+  "events": [
+    {
+      "title": "Deborah J. Benoit",
+      "description": "Deborah J. Benoit is a professor of English at the University of Vermont, specializing in the study of the history of the United States, with a focus on the 19th century. She has published extensively on the history of the United States, including the 1830s, 1840s, and 1850s. Her work often explores the social and cultural developments in the United States during those decades, particularly focusing on the impact of the American Civil War and its aftermath.",
+      "time_period": null,
+      "entity": "Deborah J. Benoit",
+      "location": "University of Vermont",
+      "sources": [],
+      "confidence": "high"
+    },
+    {
+      "title": "Origin in the Andes of Western South America",
+      "description": "Tomatoes (Solanum lycopersicum) have been cultivated in the Andes of western South America for thousands of years, with evidence of cultivation dating back to around 7500 BCE. Indigenous peoples in the region cultivated the plant, which they called 'tomatl.' The fruit was later introduced to Europe by Spanish explorers in the early 16th century, leading to its widespread cultivation and eventual global spread.",
+      "time_period": "early 1500s",
+      "entity": "Andes of western South America",
+      "location": "Andes of western South America",
+      "sources": [],
+      "confidence": "high"
+    },
+    {
+      "title": "Introduction to Europe",
+      "description": "The tomato was introduced to Europe by Spanish explorers in the early 16th century, marking a significant event in its history. This introduction led to the spread of the tomato across the world, eventually leading to the development of the many varieties we know today.",
+      "time_period": "early 1600s",
+      "entity": "Spanish explorers",
+      "location": "Europe",
+      "sources": [],
+      "confidence": "high"
+    },
+    {
+      "title": "Cultivation and Hybridization",
+      "description": "Over the centuries, tomatoes underwent extensive cultivation and hybridization, resulting in the development of numerous varieties that are now widely cultivated worldwide.",
+      "time_period": "mid-1800s",
+      "entity": "tomato",
+      "location": "various locations",
+      "sources": [],
+      "confidence": "medium"
+    },
+    {
+      "title": "Modern Cultivation",
+      "description": "Today, there are over 10,00'thousands of varieties of tomatoes available, showcasing the extensive cultivation and hybridization efforts over centuries.",
+      "time_period": "modern",
+      "entity": "tomato",
+      "location": "various locations",
+      "sources": [],
+      "confidence": "medium"
+    },
+    {
+      "title": "Introduction to Europe",
+      "description": "The tomato was brought from Mexico to Spain by early explorers and began to be cultivated in Europe in the mid-1500s.",
+      "time_period": "mid-1500s",
+      "entity": "Tomato",
+      "location": "Spain",
+      "sources": [
+        "The tomato was brought from Mexico to Spain by those early explorers."
+      ],
+      "confidence": "high"
+    },
+    {
+      "title": "Cultural and Culinary Adoption",
+      "description": "In France, the tomato was known as 'pomme d'amour' and was thought to be an aphrodisiac.",
+      "time_period": "early 1700s",
+      "entity": "France",
+      "location": "France",
+      "sources": [
+        "In France, it was called a love apple (pomme d'amour) and thought to be an aphrodisiac."
+      ],
+      "confidence": "medium"
+    },
+    {
+      "title": "Toxicity and Misunderstanding",
+      "description": "The tomato was mistakenly considered poisonous due to its relation to Atropa belladonna and contains solanine in its leaves and roots.",
+      "time_period": "early 1900s",
+      "entity": "Tomato",
+      "location": "Europe",
+      "sources": [
+        "The tomato also is a relative of deadly nightshade (Atropa belladonna)."
+      ],
+      "confidence": "medium"
+    },
+    {
+      "title": "Introduction to the United States",
+      "description": "The tomato was introduced to the United States in the early 1700s, primarily as an ornamental plant in the northern colonies, but its popularity as a food grew significantly by the early 1900s.",
+      "time_period": "early 1700s",
+      "entity": "Tomato",
+      "location": "United States",
+      "sources": [
+        "The apparent proof of the tomato's poisonous nature was based on a false assumption. While it was true that upper class Europeans did die after consuming tomatoes, the fault was not with the tomato but with the pewter dinnerware used.",
+        "In the early 1700s, the tomato returned to the United States, initially grown primarily as an ornamental plant in the northern colonies but grown for its fruit in southern regions."
+      ],
+      "confidence": "medium"
+    },
+    {
+      "title": "Cultivation and Use",
+      "description": "Tomatoes are grown in home gardens and on commercial farms worldwide. They are a popular crop in many cuisines, used in various dishes and processed into products found in supermarkets.",
+      "time_period": "Today",
+      "entity": "Tomato",
+      "location": "Worldwide",
+      "sources": [
+        "Today, tomatoes are grown around the world and are a star of international cuisine.",
+        "They are grown in home gardens and on commercial farms."
+      ],
+      "confidence": "high"
+    },
+    {
+      "title": "Culinary Use",
+      "description": "Tomatoes are commonly used in various dishes and processed into products found in supermarkets.",
+      "time_period": "Today",
+      "entity": "Tomato",
+      "location": "Worldwide",
+      "sources": [
+        "They are eaten raw, served cooked in a variety of dishes and processed into products that line our supermarket shelves."
+      ],
+      "confidence": "medium"
+    },
+    {
+      "title": "Tomato Classification",
+      "description": "Botanically, a tomato is a fruit, but in culinary contexts, it is commonly considered a vegetable.",
+      "time_period": null,
+      "entity": "tomato",
+      "location": "null",
+      "sources": [],
+      "confidence": "high"
+    },
+    {
+      "title": "Nix v. Hedden (1893)",
+      "description": "In 1893, the U.S. Supreme Court ruled in the case of Nix v. Hedden that tomatoes are considered a vegetable for legal purposes, despite being botanically a fruit.",
+      "time_period": null,
+      "entity": "United States Supreme Court",
+      "location": "United States",
+      "sources": [],
+      "confidence": "high"
+    }
+  ]
+}
