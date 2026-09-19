@@ -1,46 +1,52 @@
-from ollama import Client
-from models import Ingredient
+from openai import OpenAI
+
+from models import HistoricalEvent
 from prompts import EXTRACTION_SYSTEM_PROMPT
 
 
-MODEL = "qwen3:8b"
-MAX_RETRIES = 1
-TIMEOUT = 90
+MODEL = "qwen3.5:9b"
+TIMEOUT = 300
 
-
-client = Client(
-    host="http://localhost:11434",
+client = OpenAI(
+    base_url="http://localhost:1234/v1",
+    api_key="lm-studio",
     timeout=TIMEOUT,
 )
 
 
-def extract(text: str) -> Ingredient:
-    for attempt in range(1, MAX_RETRIES + 1):
-        try:
-            response = client.chat(
-                model=MODEL,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": EXTRACTION_SYSTEM_PROMPT,
-                    },
-                    {
-                        "role": "user",
-                        "content": text,
-                    },
-                ],
-                think=False,
-                format=Ingredient.model_json_schema(),
-            )
+def extract(text: str) -> list[HistoricalEvent]:
+    response = client.chat.completions.create(
+        model=MODEL,
+        messages=[
+            {
+                "role": "system",
+                "content": EXTRACTION_SYSTEM_PROMPT,
+            },
+            {
+                "role": "user",
+                "content": text,
+            },
+        ],
+        extra_body={
+            "chat_template_kwargs": {
+                "enable_thinking": False,
+            }
+        },
+    )
 
-            return Ingredient.model_validate_json(
-                response.message.content
-            )
+    message = response.choices[0].message
 
-        except Exception as error:
-            print(
-                f"  Attempt {attempt}/{MAX_RETRIES} failed: {error}"
-            )
+    # print("\n=== THINKING ===")
+    # print(getattr(message, "reasoning_content", None))
 
-            if attempt == MAX_RETRIES:
-                raise
+    print("\n=== CONTENT ===")
+    print(message.content)
+
+    print("\n=== FINISH ===")
+    print(response.choices[0].finish_reason)
+
+    from pydantic import TypeAdapter
+
+    adapter = TypeAdapter(list[HistoricalEvent])
+
+    return adapter.validate_json(message.content)

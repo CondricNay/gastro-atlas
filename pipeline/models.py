@@ -4,13 +4,13 @@ from pydantic import BaseModel, Field
 
 
 class HistoricalEvent(BaseModel):
-    title: str
+    # title: str
     description: str
     time_period: str | None = Field(default=None)
-    entity: str
+    # entity: str
     location: str
     # sources: list[str] = Field(default_factory=list)
-    confidence: Literal["high", "medium", "low"]
+    # confidence: Literal["high", "medium", "low"]
 
 
 class Ingredient(BaseModel):
