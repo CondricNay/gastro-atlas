@@ -27,17 +27,9 @@ def extract(text: str) -> list[HistoricalEvent]:
                 "content": text,
             },
         ],
-        extra_body={
-            "chat_template_kwargs": {
-                "enable_thinking": False,
-            }
-        },
     )
 
     message = response.choices[0].message
-
-    # print("\n=== THINKING ===")
-    # print(getattr(message, "reasoning_content", None))
 
     print("\n=== CONTENT ===")
     print(message.content)

@@ -114,7 +114,7 @@ Use only information explicitly stated in the source.
 Do not add outside knowledge.
 Exclude general scientific facts and modern facts.
 
-Return ONLY a JSON array.
+Return ONLY a raw JSON array.
 
 Each object must contain exactly these fields:
 
@@ -122,3 +122,33 @@ Each object must contain exactly these fields:
 - time_period
 - location
 """
+
+# EXTRACTION_SYSTEM_PROMPT = """
+# Extract historical events from the source text.
+
+# A historical event is a distinct historical development explicitly
+# described in the source, such as:
+# - introduction to a place
+# - spread to a place
+# - cultivation or production
+# - establishment of institutions
+# - trade or commercial development
+# - historical use
+
+# For each event, extract:
+# - description
+# - time_period
+# - location
+
+# Rules:
+# - Use only information explicitly stated in the source.
+# - Do not infer missing dates, locations, causes, or relationships.
+# - Combine statements when they describe the same historical development.
+# - Create separate events for distinct historical developments.
+# - Exclude general scientific information.
+# - Exclude modern information.
+# - Preserve the source's wording for time_period and location when possible.
+# - Use null when time_period or location is not explicitly stated.
+
+# Return only a JSON array.
+# """

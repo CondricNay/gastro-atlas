@@ -63,8 +63,8 @@ from extractor import extract
 
 
 def main():
-    input_file = Path("input/coffee.txt")
-    output_file = Path("output/coffee_raw.json")
+    input_file = Path("data/raw/coffee.txt")
+    output_file = Path("data/extracted/coffee.json")
 
     text = input_file.read_text(encoding="utf-8")
 
@@ -81,10 +81,6 @@ def main():
         print(f"Extracting chunk {i}/{len(chunks)}...")
 
         events = extract(chunk)
-
-        # for event in events:
-        #     print(f"  → {event.title}")
-
         all_events.extend(events)
 
     output_file.parent.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,164 @@
+[
+  {
+    "description": "The earliest reliable accounts of coffee drinking come from Yemen and Sufi monks in Yemen are reported to have used coffee to help them stay awake during nighttime prayers",
+    "time_period": "15th century",
+    "location": "Yemen",
+    "start_year": 1401,
+    "end_year": 1500,
+    "latitude": 15.5,
+    "longitude": 47.5
+  },
+  {
+    "description": "Coffee cultivation and preparation developed in Yemen, and the drink became associated with religious communities in the region",
+    "time_period": "15th century",
+    "location": "Yemen",
+    "start_year": 1401,
+    "end_year": 1500,
+    "latitude": 15.5,
+    "longitude": 47.5
+  },
+  {
+    "description": "Coffee had spread from Yemen to other parts of the Arabian Peninsula, including Mecca and Medina",
+    "time_period": "By the 16th century",
+    "location": "Arabian Peninsula",
+    "start_year": null,
+    "end_year": 1600,
+    "latitude": 25.0,
+    "longitude": 45.0
+  },
+  {
+    "description": "Coffeehouses began appearing in cities across the region",
+    "time_period": "By the 16th century",
+    "location": "Cities across the region",
+    "start_year": null,
+    "end_year": 1600,
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "description": "Coffee reached the Ottoman Empire",
+    "time_period": "16th century",
+    "location": "Ottoman Empire",
+    "start_year": 1501,
+    "end_year": 1600,
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "description": "Coffeehouses became established in Istanbul",
+    "time_period": "16th century",
+    "location": "Istanbul",
+    "start_year": 1501,
+    "end_year": 1600,
+    "latitude": 41.03508,
+    "longitude": 28.98331
+  },
+  {
+    "description": "Coffee was introduced to Europe",
+    "time_period": "17th century",
+    "location": "Europe",
+    "start_year": 1601,
+    "end_year": 1700,
+    "latitude": 48.69096,
+    "longitude": 9.14062
+  },
+  {
+    "description": "Coffee began to appear in Venice",
+    "time_period": "17th century",
+    "location": "Venice",
+    "start_year": 1601,
+    "end_year": 1700,
+    "latitude": 45.4389,
+    "longitude": 12.33092
+  },
+  {
+    "description": "The first coffeehouses were established in England",
+    "time_period": "middle of the 17th century",
+    "location": "England",
+    "start_year": 1634,
+    "end_year": 1667,
+    "latitude": 52.16045,
+    "longitude": -0.70312
+  },
+  {
+    "description": "Oxford opened a coffeehouse",
+    "time_period": "1654",
+    "location": "Oxford",
+    "start_year": 1654,
+    "end_year": 1654,
+    "latitude": 51.75222,
+    "longitude": -1.25596
+  },
+  {
+    "description": "The first coffeehouse in London appeared",
+    "time_period": "around 1652",
+    "location": "London",
+    "start_year": 1652,
+    "end_year": 1652,
+    "latitude": 51.50853,
+    "longitude": -0.12574
+  },
+  {
+    "description": "Coffeehouses became popular in London",
+    "time_period": "late 17th century",
+    "location": "London",
+    "start_year": 1668,
+    "end_year": 1700,
+    "latitude": 51.50853,
+    "longitude": -0.12574
+  },
+  {
+    "description": "Lloyd's Coffee House became a meeting place for merchants and people involved in maritime insurance",
+    "time_period": "late 17th century",
+    "location": "London",
+    "start_year": 1668,
+    "end_year": 1700,
+    "latitude": 51.50853,
+    "longitude": -0.12574
+  },
+  {
+    "description": "Coffee cultivation expanded beyond Arabia",
+    "time_period": "17th and 18th centuries",
+    "location": "beyond Arabia",
+    "start_year": 1601,
+    "end_year": 1800,
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "description": "The Dutch established coffee cultivation in their colonies, including Java in the Dutch East Indies",
+    "time_period": "17th and 18th centuries",
+    "location": "Java in the Dutch East Indies",
+    "start_year": 1601,
+    "end_year": 1800,
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "description": "European colonial powers established coffee plantations in tropical regions of the Americas and the Caribbean",
+    "time_period": "18th century",
+    "location": "tropical regions of the Americas and the Caribbean",
+    "start_year": 1701,
+    "end_year": 1800,
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "description": "Coffee production expanded in places such as the French Caribbean, Brazil, and other parts of Latin America",
+    "time_period": "18th century",
+    "location": "French Caribbean, Brazil, and other parts of Latin America",
+    "start_year": 1701,
+    "end_year": 1800,
+    "latitude": null,
+    "longitude": null
+  },
+  {
+    "description": "Coffee became an important commodity in international trade",
+    "time_period": "18th and 19th centuries",
+    "location": "international trade",
+    "start_year": 1701,
+    "end_year": 1900,
+    "latitude": 45.68194,
+    "longitude": -74.00528
+  }
+]
