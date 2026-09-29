@@ -1,13 +1,13 @@
 -- name: CreateEvent :one
 INSERT INTO events (
     ingredient_id,
-    title,
     description,
     time_period,
-    entity,
     location,
-    sources,
-    confidence
+    start_year,
+    end_year,
+    latitude,
+    longitude
 )
 VALUES (
     $1, $2, $3, $4, $5, $6, $7, $8

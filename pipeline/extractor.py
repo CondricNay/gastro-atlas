@@ -18,15 +18,10 @@ def extract(text: str) -> list[HistoricalEvent]:
     response = client.chat.completions.create(
         model=MODEL,
         messages=[
-            {
-                "role": "system",
-                "content": EXTRACTION_SYSTEM_PROMPT,
-            },
-            {
-                "role": "user",
-                "content": text,
-            },
+            {"role": "system", "content": EXTRACTION_SYSTEM_PROMPT},
+            {"role": "user", "content": text},
         ],
+        max_tokens=8192,
     )
 
     message = response.choices[0].message

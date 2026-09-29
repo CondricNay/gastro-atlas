@@ -2,17 +2,17 @@ import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
 import { feature } from "topojson-client";
-import type { Place } from "../types/ingredients";
+import type { HistoricalEvent } from "../types/ingredients";
 import { generateRouteSegments } from "../utils/route";
 
 interface WorldMapProps {
-  places: Place[];
-  onPlaceClick?: (place: Place) => void;
+  events: HistoricalEvent[];
+  onEventClick?: (event: HistoricalEvent) => void;
 }
 
 export default function WorldMap({
-  places,
-  onPlaceClick,
+  events,
+  onEventClick,
 }: WorldMapProps) {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
@@ -34,10 +34,11 @@ export default function WorldMap({
       if (!svgRef.current) return;
 
       const world = await fetch("/countries-110m.json")
-        .then(res => res.json());
+        .then((res) => res.json());
 
       const countries = feature(
-        world, world.objects.countries
+        world,
+        world.objects.countries
       );
 
       const svg = d3.select(svgRef.current);
@@ -57,55 +58,67 @@ export default function WorldMap({
     drawMap();
   }, []);
 
-  // Update places and routes.
+  // Update events and routes.
   useEffect(() => {
     if (!svgRef.current) return;
 
     const svg = d3.select(svgRef.current);
-    const placesLayer = svg.select(".places-layer");
+    const eventsLayer = svg.select(".events-layer");
 
-    placesLayer
-      .selectAll("circle.place")
-      .data(places)
+    // Only events with coordinates can be displayed on the map.
+    const plottableEvents = events.filter(
+      (event) =>
+        event.latitude !== null &&
+        event.longitude !== null
+    );
+
+    eventsLayer
+      .selectAll("circle.event")
+      .data(plottableEvents)
       .join(
-        enter =>
+        (enter) =>
           enter
             .append("circle")
-            .attr("class", "place")
+            .attr("class", "event")
             .attr("fill", "red")
             .attr("r", 5)
             .style("cursor", "pointer"),
 
-        update => update,
-        exit => exit.remove()
+        (update) => update,
+
+        (exit) => exit.remove()
       )
-      .attr("cx", d =>
-        projection([d.longitude, d.latitude])![0]
+      .attr("cx", (d) =>
+        projection([
+          d.longitude!,
+          d.latitude!,
+        ])![0]
       )
-      .attr("cy", d =>
-        projection([d.longitude, d.latitude])![1]
+      .attr("cy", (d) =>
+        projection([
+          d.longitude!,
+          d.latitude!,
+        ])![1]
       )
-      .on("click", (event, place) => {
-        onPlaceClick?.(place);
+      .on("click", (event, historicalEvent) => {
+        onEventClick?.(historicalEvent);
       });
 
     // Routes
-    const routeSegments = generateRouteSegments(places);
+    const routeSegments = generateRouteSegments(events);
 
     const routeLines = routeSegments.map(
-      segment => [
+      (segment) => [
         projection([
-          segment.from.longitude,
-          segment.from.latitude,
+          segment.from.longitude!,
+          segment.from.latitude!,
         ]),
         projection([
-          segment.to.longitude,
-          segment.to.latitude,
+          segment.to.longitude!,
+          segment.to.latitude!,
         ]),
       ]
     );
-
-    // console.log("Route Lines:", routeLines);
 
     const routesLayer = svg.select(".routes-layer");
 
@@ -118,7 +131,7 @@ export default function WorldMap({
       .attr("fill", "none")
       .attr("stroke", "blue")
       .attr("stroke-width", 2);
-  }, [places, onPlaceClick]);
+  }, [events, onEventClick]);
 
   return (
     <svg
@@ -129,7 +142,7 @@ export default function WorldMap({
     >
       <g className="countries-layer" />
       <g className="routes-layer" />
-      <g className="places-layer" />
+      <g className="events-layer" />
     </svg>
   );
 }

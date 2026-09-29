@@ -1,32 +1,13 @@
-export interface Place {
-  id: number;
-  name: string;
-  type: string;
-  latitude: number;
-  longitude: number;
-  relationship: string;
-  startYear: number;
-  endYear: number | null;
-  notes: string;
-}
-
-// export interface Ingredient {
-//   id: number;
-//   slug: string;
-//   name: string;
-//   description: string;
-//   places: Place[];
-// }
-
 export interface HistoricalEvent {
   id: number;
-  title: string;
+  ingredientId: number;
   description: string;
   timePeriod: string;
-  entity: string;
   location: string;
-  sources: string[];
-  confidence: "high" | "medium" | "low";
+  startYear: number | null;
+  endYear: number | null;
+  latitude: number | null;
+  longitude: number | null;
 }
 
 export interface Ingredient {

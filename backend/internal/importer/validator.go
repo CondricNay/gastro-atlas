@@ -3,8 +3,8 @@ package importer
 import "fmt"
 
 func ValidateEvent(event EventData) error {
-	if event.Title == "" {
-		return fmt.Errorf("title is required")
+	if event.Description == "" {
+		return fmt.Errorf("description is required")
 	}
 
 	return nil
@@ -13,7 +13,7 @@ func ValidateEvent(event EventData) error {
 func ValidateIngredient(ingredient IngredientData) error {
 	for _, event := range ingredient.Events {
 		if err := ValidateEvent(event); err != nil {
-			return fmt.Errorf("invalid event %q: %w", event.Title, err)
+			return fmt.Errorf("invalid event %q: %w", event.Description, err)
 		}
 	}
 

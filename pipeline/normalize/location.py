@@ -1,31 +1,3 @@
-# import os
-
-# from dotenv import load_dotenv
-# from geopy.geocoders import GeoNames
-
-
-# load_dotenv()
-
-# geolocator = GeoNames(
-#     username=os.environ["GEONAMES_USERNAME"],
-#     timeout=10,
-# )
-
-
-# def resolve_location(
-#     location: str,
-# ) -> tuple[float, float] | None:
-#     result = geolocator.geocode(
-#         location,
-#         exactly_one=True,
-#     )
-
-#     if result is None:
-#         return None
-
-#     return result.latitude, result.longitude
-
-
 import os
 
 from dotenv import load_dotenv
@@ -40,6 +12,15 @@ geolocator = GeoNames(
 )
 
 
+def is_valid_result(result) -> bool:
+    feature_class = result.raw.get("fcl")
+
+    if feature_class not in ("A", "P", "T", "L"):
+        return False
+
+    return True
+
+
 def resolve_location(
     location: str,
 ) -> tuple[float, float] | None:
@@ -51,9 +32,17 @@ def resolve_location(
     if not results:
         return None
 
+    results = [
+        result
+        for result in results
+        if is_valid_result(result)
+    ]
+
+    if not results:
+        return None
+
     location_lower = location.lower().strip()
 
-    # Prefer an exact name match.
     exact_matches = [
         result
         for result in results
@@ -64,9 +53,6 @@ def resolve_location(
     if exact_matches:
         results = exact_matches
 
-    # Prefer populated places and administrative areas.
-    # P = populated place
-    # A = administrative feature
     results.sort(
         key=lambda result: (
             result.raw.get("fcl") not in ("P", "A"),

@@ -44,9 +44,7 @@ func (h *IngredientHandler) GetIngredientBySlug(c *gin.Context) {
 	)
 
 	if err != nil {
-		c.JSON(500, gin.H{
-			"error": err.Error(),
-		})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 

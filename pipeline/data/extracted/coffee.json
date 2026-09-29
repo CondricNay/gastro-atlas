@@ -1,6 +1,11 @@
 [
   {
-    "description": "The earliest reliable accounts of coffee drinking come from Yemen and Sufi monks in Yemen are reported to have used coffee to help them stay awake during nighttime prayers",
+    "description": "The earliest reliable accounts of coffee drinking come from Yemen",
+    "time_period": "15th century",
+    "location": "Yemen"
+  },
+  {
+    "description": "Sufi monks in Yemen are reported to have used coffee to help them stay awake during nighttime prayers",
     "time_period": "15th century",
     "location": "Yemen"
   },
@@ -12,12 +17,12 @@
   {
     "description": "Coffee had spread from Yemen to other parts of the Arabian Peninsula, including Mecca and Medina",
     "time_period": "By the 16th century",
-    "location": "Arabian Peninsula"
+    "location": "Arabian Peninsula, including Mecca and Medina"
   },
   {
     "description": "Coffeehouses began appearing in cities across the region",
     "time_period": "By the 16th century",
-    "location": "Cities across the region"
+    "location": "Arabian Peninsula"
   },
   {
     "description": "Coffee reached the Ottoman Empire",
@@ -35,7 +40,7 @@
     "location": "Europe"
   },
   {
-    "description": "Coffee began to appear in Venice",
+    "description": "Venetian merchants traded coffee with the Ottoman Empire, and coffee began to appear in Venice",
     "time_period": "17th century",
     "location": "Venice"
   },
@@ -66,27 +71,27 @@
   },
   {
     "description": "Coffee cultivation expanded beyond Arabia",
-    "time_period": "17th and 18th centuries",
-    "location": "beyond Arabia"
+    "time_period": "during the 17th and 18th centuries",
+    "location": "Arabia"
   },
   {
-    "description": "The Dutch established coffee cultivation in their colonies, including Java in the Dutch East Indies",
-    "time_period": "17th and 18th centuries",
+    "description": "The Dutch established coffee cultivation in their colonies, including Java",
+    "time_period": "during the 17th and 18th centuries",
     "location": "Java in the Dutch East Indies"
   },
   {
     "description": "European colonial powers established coffee plantations in tropical regions of the Americas and the Caribbean",
-    "time_period": "18th century",
+    "time_period": "In the 18th century",
     "location": "tropical regions of the Americas and the Caribbean"
   },
   {
     "description": "Coffee production expanded in places such as the French Caribbean, Brazil, and other parts of Latin America",
-    "time_period": "18th century",
+    "time_period": "In the 18th century",
     "location": "French Caribbean, Brazil, and other parts of Latin America"
   },
   {
     "description": "Coffee became an important commodity in international trade",
-    "time_period": "18th and 19th centuries",
-    "location": "international trade"
+    "time_period": "during the 18th and 19th centuries",
+    "location": "International trade"
   }
 ]

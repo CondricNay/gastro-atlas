@@ -2,21 +2,22 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { getIngredient } from "../api/ingredients";
-import type { Ingredient, Place } from "../types/ingredients";
-import { convertEventToPlace } from "../utils/eventConverter";
+import type { Ingredient, HistoricalEvent } from "../types/ingredients";
 
 import Timeline from "../components/Timeline";
 import WorldMap from "../components/WorldMap";
-import PlaceInfo from "../components/PlaceInfo";
+import EventInfo from "../components/EventInfo";
 
 export default function IngredientPage() {
   const { slug } = useParams();
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [ingredient, setIngredient] = useState<Ingredient | null>(null);
 
   const [currentYear, setCurrentYear] = useState<number | null>(null);
-  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const [selectedEvent, setSelectedEvent] =
+    useState<HistoricalEvent | null>(null);
 
   // Load ingredient
   useEffect(() => {
@@ -40,11 +41,16 @@ export default function IngredientPage() {
   useEffect(() => {
     if (!ingredient) return;
 
-    const places = ingredient.events.map(convertEventToPlace)
+    const years = ingredient.events
+      .map((event) => event.startYear)
+      .filter((year): year is number => year !== null);
 
-    const earliestYear = Math.min(
-      ...places.map(place => place.startYear)
-    );
+    if (years.length === 0) {
+      setCurrentYear(null);
+      return;
+    }
+
+    const earliestYear = Math.min(...years);
 
     setCurrentYear(earliestYear);
   }, [ingredient]);
@@ -65,13 +71,13 @@ export default function IngredientPage() {
     );
   }
 
-  if (!ingredient || currentYear === null) {
+  if (!ingredient) {
     return null;
   }
 
-  const places = ingredient.events.map(convertEventToPlace);
+  const events = ingredient.events;
 
-  if (places.length === 0) {
+  if (events.length === 0) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
         <div className="text-center">
@@ -80,27 +86,56 @@ export default function IngredientPage() {
           </h1>
 
           <p className="mt-2 text-slate-400">
-            No historical locations are available yet.
+            No historical events are available yet.
           </p>
         </div>
       </main>
     );
   }
 
-  const minYear = Math.min(
-    ...places.map(place => place.startYear)
-  );
+  const years = events
+    .map((event) => event.startYear)
+    .filter((year): year is number => year !== null);
 
+  if (years.length === 0 || currentYear === null) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold">
+            {ingredient.name}
+          </h1>
+
+          <p className="mt-2 text-slate-400">
+            No timeline information is available yet.
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  const minYear = Math.min(...years);
   const maxYear = new Date().getFullYear();
 
-  const visiblePlaces = places.filter(
-    place => place.startYear <= currentYear
+  // Events that have happened by the current timeline year
+  const visibleEvents = events.filter(
+    (event) =>
+      event.startYear !== null &&
+      event.startYear <= currentYear
   );
 
-  const markers = places.map(place => ({
-    year: place.startYear,
-    label: `${place.relationship}: ${place.name}`,
-  }));
+  // Only events with coordinates can be displayed on the map
+  const visibleMapEvents = visibleEvents.filter(
+    (event) =>
+      event.latitude !== null &&
+      event.longitude !== null
+  );
+
+  const markers = events
+    .filter((event) => event.startYear !== null)
+    .map((event) => ({
+      year: event.startYear as number,
+      label: event.location,
+    }));
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
@@ -123,14 +158,14 @@ export default function IngredientPage() {
           {/* Map */}
           <div className="rounded-xl bg-slate-900 p-4">
             <WorldMap
-              places={visiblePlaces}
-              onPlaceClick={setSelectedPlace}
+              events={visibleMapEvents}
+              onEventClick={setSelectedEvent}
             />
           </div>
 
-          {/* Selected place */}
+          {/* Selected event */}
           <aside className="rounded-xl bg-slate-900 p-6">
-            <PlaceInfo place={selectedPlace} />
+            <EventInfo event={selectedEvent} />
           </aside>
 
         </section>
@@ -145,6 +180,7 @@ export default function IngredientPage() {
             markers={markers}
           />
         </section>
+
       </div>
     </main>
   );

@@ -9,15 +9,15 @@ import (
 )
 
 type Event struct {
-	ID           int32    `json:"id"`
-	IngredientID int32    `json:"ingredientId"`
-	Title        string   `json:"title"`
-	Description  string   `json:"description"`
-	TimePeriod   string   `json:"timePeriod"`
-	Entity       string   `json:"entity"`
-	Location     string   `json:"location"`
-	Sources      []string `json:"sources"`
-	Confidence   string   `json:"confidence"`
+	ID           int32         `json:"id"`
+	IngredientID int32         `json:"ingredientId"`
+	Description  string        `json:"description"`
+	TimePeriod   string        `json:"timePeriod"`
+	Location     string        `json:"location"`
+	StartYear    pgtype.Int4   `json:"startYear"`
+	EndYear      pgtype.Int4   `json:"endYear"`
+	Latitude     pgtype.Float8 `json:"latitude"`
+	Longitude    pgtype.Float8 `json:"longitude"`
 }
 
 type Ingredient struct {

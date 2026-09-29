@@ -22,7 +22,7 @@ func main() {
 	}
 	defer db.Close()
 
-	if err := importer.Run(ctx, db, "data/ingredients"); err != nil {
+	if err := importer.Run(ctx, db, "../pipeline/data/processed"); err != nil {
 		panic(err)
 	}
 }

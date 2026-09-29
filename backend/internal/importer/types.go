@@ -8,12 +8,11 @@ type IngredientData struct {
 }
 
 type EventData struct {
-	ID          int      `json:"id"`
-	Title       string   `json:"title"`
 	Description string   `json:"description"`
 	TimePeriod  string   `json:"time_period"`
-	Entity      string   `json:"entity"`
 	Location    string   `json:"location"`
-	Sources     []string `json:"sources"`
-	Confidence  string   `json:"confidence"`
+	StartYear   *int32   `json:"start_year"`
+	EndYear     *int32   `json:"end_year"`
+	Latitude    *float64 `json:"latitude"`
+	Longitude   *float64 `json:"longitude"`
 }

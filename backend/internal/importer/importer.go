@@ -81,24 +81,61 @@ func importIngredient(
 			ctx,
 			sqlc.CreateEventParams{
 				IngredientID: ingredientID,
-				Title:        event.Title,
 				Description:  event.Description,
 				TimePeriod:   event.TimePeriod,
-				Entity:       event.Entity,
 				Location:     event.Location,
-				Sources:      event.Sources,
-				Confidence:   event.Confidence,
+
+				StartYear: pgtype.Int4{
+					Int32: func() int32 {
+						if event.StartYear != nil {
+							return *event.StartYear
+						}
+						return 0
+					}(),
+					Valid: event.StartYear != nil,
+				},
+
+				EndYear: pgtype.Int4{
+					Int32: func() int32 {
+						if event.EndYear != nil {
+							return *event.EndYear
+						}
+						return 0
+					}(),
+					Valid: event.EndYear != nil,
+				},
+
+				Latitude: pgtype.Float8{
+					Float64: func() float64 {
+						if event.Latitude != nil {
+							return *event.Latitude
+						}
+						return 0
+					}(),
+					Valid: event.Latitude != nil,
+				},
+
+				Longitude: pgtype.Float8{
+					Float64: func() float64 {
+						if event.Longitude != nil {
+							return *event.Longitude
+						}
+						return 0
+					}(),
+					Valid: event.Longitude != nil,
+				},
 			},
 		)
+
 		if err != nil {
 			return fmt.Errorf(
 				"create event %q: %w",
-				event.Title,
+				event.Description,
 				err,
 			)
 		}
 
-		fmt.Printf("✓ %s\n", event.Title)
+		fmt.Printf("✓ %s\n", event.Description)
 	}
 
 	if err := tx.Commit(ctx); err != nil {

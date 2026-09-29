@@ -1,6 +1,6 @@
 import json
 
-from models import HistoricalEvent
+from models import HistoricalEvent, ProcessedHistoricalEvent
 from normalize.time import resolve_time
 from normalize.location import resolve_location
 
@@ -21,18 +21,27 @@ def main():
         start_year, end_year = resolve_time(event.time_period)
         coordinates = resolve_location(event.location)
 
-        processed.append({
-            "description": event.description,
-            "time_period": event.time_period,
-            "location": event.location,
-            "start_year": start_year,
-            "end_year": end_year,
-            "latitude": coordinates[0] if coordinates else None,
-            "longitude": coordinates[1] if coordinates else None,
-        })
+        processed.append(
+            ProcessedHistoricalEvent(
+                description=event.description,
+                time_period=event.time_period,
+                location=event.location,
+                start_year=start_year,
+                end_year=end_year,
+                latitude=coordinates[0] if coordinates else None,
+                longitude=coordinates[1] if coordinates else None,
+            )
+        )
+
+    output = { 
+        "slug": "coffee",
+        "name": "Coffee",
+        "description": "Coffee",
+        "events": [event.model_dump() for event in processed]
+    }
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as file:
-        json.dump(processed, file, ensure_ascii=False, indent=2)
+        json.dump(output, file, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":

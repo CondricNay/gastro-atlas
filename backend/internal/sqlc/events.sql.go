@@ -7,64 +7,66 @@ package sqlc
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createEvent = `-- name: CreateEvent :one
 INSERT INTO events (
     ingredient_id,
-    title,
     description,
     time_period,
-    entity,
     location,
-    sources,
-    confidence
+    start_year,
+    end_year,
+    latitude,
+    longitude
 )
 VALUES (
     $1, $2, $3, $4, $5, $6, $7, $8
 )
-RETURNING id, ingredient_id, title, description, time_period, entity, location, sources, confidence
+RETURNING id, ingredient_id, description, time_period, location, start_year, end_year, latitude, longitude
 `
 
 type CreateEventParams struct {
-	IngredientID int32    `json:"ingredientId"`
-	Title        string   `json:"title"`
-	Description  string   `json:"description"`
-	TimePeriod   string   `json:"timePeriod"`
-	Entity       string   `json:"entity"`
-	Location     string   `json:"location"`
-	Sources      []string `json:"sources"`
-	Confidence   string   `json:"confidence"`
+	IngredientID int32         `json:"ingredientId"`
+	Description  string        `json:"description"`
+	TimePeriod   string        `json:"timePeriod"`
+	Location     string        `json:"location"`
+	StartYear    pgtype.Int4   `json:"startYear"`
+	EndYear      pgtype.Int4   `json:"endYear"`
+	Latitude     pgtype.Float8 `json:"latitude"`
+	Longitude    pgtype.Float8 `json:"longitude"`
 }
 
 func (q *Queries) CreateEvent(ctx context.Context, arg CreateEventParams) (Event, error) {
 	row := q.db.QueryRow(ctx, createEvent,
 		arg.IngredientID,
-		arg.Title,
 		arg.Description,
 		arg.TimePeriod,
-		arg.Entity,
 		arg.Location,
-		arg.Sources,
-		arg.Confidence,
+		arg.StartYear,
+		arg.EndYear,
+		arg.Latitude,
+		arg.Longitude,
 	)
 	var i Event
 	err := row.Scan(
 		&i.ID,
 		&i.IngredientID,
-		&i.Title,
 		&i.Description,
 		&i.TimePeriod,
-		&i.Entity,
 		&i.Location,
-		&i.Sources,
-		&i.Confidence,
+		&i.StartYear,
+		&i.EndYear,
+		&i.Latitude,
+		&i.Longitude,
 	)
 	return i, err
 }
 
 const getEventsByIngredient = `-- name: GetEventsByIngredient :many
-SELECT id, ingredient_id, title, description, time_period, entity, location, sources, confidence
+SELECT id, ingredient_id, description, time_period, location, start_year, end_year, latitude, longitude
 FROM events
 WHERE ingredient_id = $1
 ORDER BY id
@@ -82,13 +84,13 @@ func (q *Queries) GetEventsByIngredient(ctx context.Context, ingredientID int32)
 		if err := rows.Scan(
 			&i.ID,
 			&i.IngredientID,
-			&i.Title,
 			&i.Description,
 			&i.TimePeriod,
-			&i.Entity,
 			&i.Location,
-			&i.Sources,
-			&i.Confidence,
+			&i.StartYear,
+			&i.EndYear,
+			&i.Latitude,
+			&i.Longitude,
 		); err != nil {
 			return nil, err
 		}
